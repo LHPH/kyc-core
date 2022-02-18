@@ -1,0 +1,7 @@
+kyc-messages:
+  catalog:
+    messages:
+      TEST:
+        code: CODE
+        message: MESSAGE
+        type: INFO

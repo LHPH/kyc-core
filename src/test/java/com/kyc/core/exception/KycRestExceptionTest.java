@@ -20,7 +20,7 @@ public class KycRestExceptionTest {
     @Test
     public void toString_partialFields_returnString(){
 
-        KycRestException kycRestException = KycRestException.builder()
+        KycRestException kycRestException = KycRestException.builderRestException()
                 .errorData(new MessageData("CODE","MESSAGE", MessageType.ERROR))
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .build();
@@ -32,7 +32,7 @@ public class KycRestExceptionTest {
 
     @Test
     public void toString_allFields_returnString(){
-        KycRestException kycRestException = KycRestException.builder()
+        KycRestException kycRestException = KycRestException.builderRestException()
                 .errorData(new MessageData("CODE","MESSAGE", MessageType.ERROR))
                 .exception(new NullPointerException("test null"))
                 .inputData("INPUT")

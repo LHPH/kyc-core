@@ -1,7 +1,6 @@
 package com.kyc.core.config;
 
 import org.springframework.boot.actuate.info.InfoContributor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Bean;
@@ -11,9 +10,7 @@ import javax.annotation.PostConstruct;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 
 import static com.kyc.core.util.DateUtil.getDifference;
 

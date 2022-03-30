@@ -1,6 +1,5 @@
 package com.kyc.core.properties;
 
-import com.kyc.core.exception.KycRestException;
 import com.kyc.core.model.BaseModel;
 import com.kyc.core.model.properties.CatalogMessages;
 import com.kyc.core.model.web.MessageData;

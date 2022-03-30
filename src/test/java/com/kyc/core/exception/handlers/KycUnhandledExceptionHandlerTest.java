@@ -1,4 +1,4 @@
-package com.kyc.core.exception;
+package com.kyc.core.exception.handlers;
 
 import com.kyc.core.enums.MessageType;
 import com.kyc.core.model.web.MessageData;

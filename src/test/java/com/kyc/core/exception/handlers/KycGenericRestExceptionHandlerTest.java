@@ -1,6 +1,7 @@
-package com.kyc.core.exception;
+package com.kyc.core.exception.handlers;
 
 import com.kyc.core.enums.MessageType;
+import com.kyc.core.exception.KycRestException;
 import com.kyc.core.model.web.MessageData;
 import com.kyc.core.model.web.ResponseData;
 import org.junit.Assert;
@@ -18,7 +19,7 @@ public class KycGenericRestExceptionHandlerTest {
     @Test
     public void sendErrorResponse_processKycRestException_returnErrorResponse(){
 
-        KycRestException kycRestException = KycRestException.builder()
+        KycRestException kycRestException = KycRestException.builderRestException()
                 .errorData(new MessageData("CODE","MESSAGE", MessageType.ERROR))
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .build();

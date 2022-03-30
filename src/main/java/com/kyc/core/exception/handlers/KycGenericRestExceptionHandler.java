@@ -1,6 +1,7 @@
-package com.kyc.core.exception;
+package com.kyc.core.exception.handlers;
 
 
+import com.kyc.core.exception.KycRestException;
 import com.kyc.core.model.web.ResponseData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +20,7 @@ public class KycGenericRestExceptionHandler {
     @ExceptionHandler(KycRestException.class)
     public ResponseEntity<ResponseData<Void>> sendErrorResponse(KycRestException ex){
 
-        LOGGER.error("{}",ex.toString());
+        LOGGER.error("{}",ex.printError());
 
         ResponseData<Void> response = ResponseData.<Void>builder()
                 .error(ex.getErrorData())

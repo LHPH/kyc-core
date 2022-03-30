@@ -1,14 +1,11 @@
 package com.kyc.core.util;
 
-import com.kyc.core.exception.KycRestException;
 import com.kyc.core.model.JWTData;
-import com.kyc.core.model.web.MessageData;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.JWSVerifier;
-import com.nimbusds.jose.KeyLengthException;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;

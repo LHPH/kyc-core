@@ -1,6 +1,7 @@
 package com.kyc.core.model.web;
 
 
+import com.kyc.core.model.BaseModel;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -8,7 +9,7 @@ import java.util.Map;
 
 @Builder
 @Getter
-public class RequestData<T> {
+public class RequestData<T> extends BaseModel {
 
     private Map<String,Object> pathParams;
     private Map<String,String> queryParams;

@@ -4,6 +4,7 @@ import com.kyc.core.model.MockObject;
 import com.kyc.core.model.MockObject2;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -115,6 +116,40 @@ public class GeneralUtilTest {
 
         Map<String,Object> map = new HashMap<>();
         Assert.assertFalse(GeneralUtil.isMapNotNullAndNotEmpty(map));
+    }
+
+    @Test
+    public void getValue_getValueFromWrapper_returnValue(){
+
+        MockObject mock = new MockObject();
+        mock.setIntegerField(1);
+
+        Integer value = GeneralUtil.getValue(mock,MockObject::getIntegerField);
+        Assertions.assertEquals(1,value);
+    }
+
+    @Test
+    public void getValue_WrapperNull_returnNull(){
+
+        MockObject mock = null;
+
+        Integer value = GeneralUtil.getValue(mock,MockObject::getIntegerField);
+        Assertions.assertNull(value);
+    }
+
+    @Test
+    public void toInt_doubleNotNullToInt_returnIntValue(){
+
+        Integer value = GeneralUtil.toInt(100.23D);
+        Assertions.assertEquals(100,value);
+    }
+
+    @Test
+    public void toInt_doubleNullToInt_returnZero(){
+
+        Double doubleValue = null;
+        Integer value = GeneralUtil.toInt(doubleValue);
+        Assertions.assertEquals(0,value);
     }
 
 }

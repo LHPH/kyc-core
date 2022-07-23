@@ -20,7 +20,7 @@ public class KycGenericRestExceptionHandler {
     @ExceptionHandler(KycRestException.class)
     public ResponseEntity<ResponseData<Void>> sendErrorResponse(KycRestException ex){
 
-        LOGGER.error("{}",ex.printError());
+        LOGGER.error(" ",ex);
 
         ResponseData<Void> response = ResponseData.<Void>builder()
                 .error(ex.getErrorData())

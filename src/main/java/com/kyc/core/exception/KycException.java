@@ -30,6 +30,11 @@ public class KycException extends RuntimeException{
         return printError();
     }
 
+    @Override
+    public String getMessage() {
+        return printError();
+    }
+
     public String printError(){
 
         StringBuilder sb = new StringBuilder();

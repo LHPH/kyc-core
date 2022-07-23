@@ -53,6 +53,12 @@ public class ResponseData<T> {
                 .build();
     }
 
+    public static <T> ResponseData<T> emptyResponse(){
+
+        return ResponseData.<T>builder()
+                .build();
+    }
+
 
     public ResponseEntity<ResponseData<T>> toResponseEntity(){
 

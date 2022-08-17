@@ -1,6 +1,6 @@
 package com.kyc.core.util;
 
-import com.kyc.core.model.JWTData;
+import com.kyc.core.model.jwt.JWTData;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -33,6 +33,8 @@ public final class TokenUtil {
                 .issuer(data.getIssuer())
                 .audience(data.getAudience())
                 .expirationTime(data.getExpirationTime())
+                .claim("key",data.getKey())
+                .claim("channel",data.getChannel())
                 .build();
 
         SignedJWT signedJWT = new SignedJWT(new JWSHeader(algorithm),claimsSet);

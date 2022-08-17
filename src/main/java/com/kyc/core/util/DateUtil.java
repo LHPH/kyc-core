@@ -111,20 +111,20 @@ public final class DateUtil {
 
     public static LocalDate dateToLocalDate(Date date) {
 
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return date.toInstant().atZone(ZoneId.of("UTC-6")).toLocalDate();
     }
 
     public static LocalDateTime dateToLocalDateTime(Date date) {
 
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        return date.toInstant().atZone(ZoneId.of("UTC-6")).toLocalDateTime();
     }
 
     public static Date localDateToDate(LocalDate date) {
-        return Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        return Date.from(date.atStartOfDay().atZone(ZoneId.of("UTC-6")).toInstant());
     }
 
     public static Date localDateTimeToDate(LocalDateTime date) {
-        return Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
+        return Date.from(date.atZone(ZoneId.of("UTC-6")).toInstant());
     }
 
     public static Long getDifference(LocalDateTime first, LocalDateTime second, ChronoUnit unit){

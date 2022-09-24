@@ -3,6 +3,7 @@ package com.kyc.core.exception;
 import com.kyc.core.model.web.MessageData;
 import lombok.Builder;
 import lombok.Getter;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import static com.kyc.core.constants.GeneralConstants.EXC_ERROR_DATA_LABEL;
 import static com.kyc.core.constants.GeneralConstants.EXC_INPUT_DATA_LABEL;
@@ -42,7 +43,7 @@ public class KycException extends RuntimeException{
         addDescription(sb,EXC_INPUT_DATA_LABEL,getInputData(),false);
         addDescription(sb, EXC_OUTPUT_DATA_LABEL,getOutputData(),true);
         addDescription(sb, EXC_ERROR_DATA_LABEL,getErrorData(),true);
-        addDescription(sb, EXC_ORIGINAL_EXCEPTION_LABEL,getException(),true);
+        addDescription(sb, EXC_ORIGINAL_EXCEPTION_LABEL, getException(),true);
 
         return sb.toString();
     }
@@ -55,8 +56,12 @@ public class KycException extends RuntimeException{
                 sb.append("\n");
             }
             sb.append(label);
-            sb.append(data);
-
+            if(data instanceof Exception){
+                sb.append(ExceptionUtils.getStackTrace((Exception)data));
+            }
+            else{
+                sb.append(data);
+            }
         }
     }
 }

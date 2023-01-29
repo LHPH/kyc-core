@@ -1,5 +1,6 @@
 package com.kyc.core.util;
 
+import com.kyc.core.validation.model.RuleValidation;
 import org.apache.commons.lang3.ObjectUtils;
 
 import java.util.List;
@@ -55,6 +56,20 @@ public final class GeneralUtil {
 
     public static Integer toInt(Double value){
         return toInt(value,0);
+    }
+
+    public static String setNullIfEquals(String value, String valueToCompare){
+
+        if(value == null || value.equals(valueToCompare)){
+            return null;
+        }
+        else{
+            return value;
+        }
+    }
+
+    public static <T> T getType(Object source, Class<T> type){
+        return type.cast(source);
     }
 
     private GeneralUtil(){}

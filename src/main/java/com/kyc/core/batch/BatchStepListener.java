@@ -32,9 +32,9 @@ public class BatchStepListener<I,O> extends StepListenerSupport<I,O> {
         int skipCount = stepExecution.getSkipCount();
         int writeCount = stepExecution.getWriteCount();
 
-        LOGGER.info("[{}] Starting: {}, Finish: {}, Status: {}, Read Count: {}," +
+        LOGGER.info("[{}] Status: [{}], Starting: {}, Finish: {}, Read Count: {}," +
                         " Write Count: {}, Skip Count: {}, Rollback Count: {}",
-                stepName,startDate,finishDate,exitStatus,readCount,writeCount,skipCount,rollbackCount);
+                stepName,exitStatus,startDate,finishDate,readCount,writeCount,skipCount,rollbackCount);
         return stepExecution.getExitStatus();
     }
 

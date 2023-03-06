@@ -27,7 +27,7 @@ public class BatchJobExecutionListener extends JobExecutionListenerSupport {
         Date startDate = jobExecution.getCreateTime();
         Date finishDate = jobExecution.getEndTime();
 
-        LOGGER.info("[{}] Start: {}, Finish: {}, Status: {}",jobName,startDate,finishDate,batchStatus);
+        LOGGER.info("[{}] Status: [{}], Start: {}, Finish: {}",jobName,batchStatus,startDate,finishDate);
     }
 
     @Override

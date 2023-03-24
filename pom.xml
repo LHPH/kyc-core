@@ -21,6 +21,7 @@
     <spring.security.version>5.6.3</spring.security.version>
     <spring.boot.version>2.6.2</spring.boot.version>
     <spring.batch.version>4.3.6</spring.batch.version>
+    <openhtml.version>1.0.10</openhtml.version>
   </properties>
 
   <dependencyManagement>
@@ -117,6 +118,12 @@
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-amqp</artifactId>
       <optional>true</optional>
     </dependency>
@@ -202,6 +209,26 @@
       <artifactId>pdfbox</artifactId>
       <version>2.0.27</version>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <!-- ALWAYS required, usually included transitively. -->
+      <groupId>com.openhtmltopdf</groupId>
+      <artifactId>openhtmltopdf-core</artifactId>
+      <version>${openhtml.version}</version>
+    </dependency>
+
+    <dependency>
+      <!-- Required for PDF output. -->
+      <groupId>com.openhtmltopdf</groupId>
+      <artifactId>openhtmltopdf-pdfbox</artifactId>
+      <version>${openhtml.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>5.2.3</version>
     </dependency>
 
     <!--

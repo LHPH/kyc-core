@@ -14,7 +14,6 @@ public class ReportData extends BaseModel {
     private String id;
     private String name;
     private String mimeType;
-    private String url;
     private long size;
     private Date date;
     private Resource resource;

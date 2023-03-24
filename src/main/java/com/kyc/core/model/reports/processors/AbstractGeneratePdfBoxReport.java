@@ -67,9 +67,9 @@ public abstract class AbstractGeneratePdfBoxReport<T> implements InitializingBea
             pDDocument.save(bytes);
             return new ByteArrayResource(bytes.toByteArray());
         }
-        catch(IOException ex){
+        catch(IOException ioex){
             throw KycException.builder()
-                    .exception(ex)
+                    .exception(ioex)
                     .errorData(kycMessages.getMessage(""))
                     .build();
         }

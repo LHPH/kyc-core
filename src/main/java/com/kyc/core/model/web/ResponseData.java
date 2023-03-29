@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -18,6 +20,8 @@ public class ResponseData<T> {
     private T data;
     @JsonIgnore
     private HttpStatus httpStatus;
+    @JsonIgnore
+    private HttpHeaders httpHeaders;
     private MessageData error;
 
     public HttpStatus getHttpStatus(){
@@ -30,24 +34,33 @@ public class ResponseData<T> {
 
     public static <T> ResponseData<T> of(T data){
 
-        return ResponseData.<T>builder()
-                .data(data)
-                .httpStatus(HttpStatus.OK)
-                .build();
+        return of(data,HttpStatus.OK);
     }
 
     public static <T> ResponseData<T> of(T data, HttpStatus httpStatus){
 
+        return of(data,null,httpStatus);
+    }
+
+    public static <T> ResponseData<T> of(T data, HttpHeaders headers, HttpStatus httpStatus){
+
         return ResponseData.<T>builder()
                 .data(data)
+                .httpHeaders(headers)
                 .httpStatus(httpStatus)
                 .build();
     }
 
     public static <T> ResponseData<T> of(MessageData messageData, HttpStatus httpStatus){
 
+        return of(null,null,messageData,httpStatus);
+    }
+
+    public static <T> ResponseData<T> of(T data, HttpHeaders headers, MessageData messageData, HttpStatus httpStatus){
+
         return ResponseData.<T>builder()
-                .data(null)
+                .data(data)
+                .httpHeaders(headers)
                 .httpStatus(httpStatus)
                 .error(messageData)
                 .build();
@@ -62,7 +75,21 @@ public class ResponseData<T> {
 
     public ResponseEntity<ResponseData<T>> toResponseEntity(){
 
-        return ResponseEntity.status(getHttpStatus()).body(this);
+        return ResponseEntity.status(getHttpStatus()).headers(getHttpHeaders()).body(this);
+    }
+
+    public ResponseEntity<Resource> toResponseEntityStream(){
+
+        T data = getData();
+        if(data instanceof Resource){
+            Resource resource = (Resource) getData();
+            return ResponseEntity.status(getHttpStatus())
+                    .headers(getHttpHeaders())
+                    .body(resource);
+        }
+        return ResponseEntity.status(getHttpStatus())
+                .headers(getHttpHeaders())
+                .build();
     }
 }
 

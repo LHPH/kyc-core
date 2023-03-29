@@ -216,6 +216,7 @@
       <groupId>com.openhtmltopdf</groupId>
       <artifactId>openhtmltopdf-core</artifactId>
       <version>${openhtml.version}</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
@@ -223,12 +224,21 @@
       <groupId>com.openhtmltopdf</groupId>
       <artifactId>openhtmltopdf-pdfbox</artifactId>
       <version>${openhtml.version}</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>org.apache.poi</groupId>
       <artifactId>poi-ooxml</artifactId>
       <version>5.2.3</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sf.jasperreports</groupId>
+      <artifactId>jasperreports</artifactId>
+      <version>6.20.1</version>
+      <scope>provided</scope>
     </dependency>
 
     <!--

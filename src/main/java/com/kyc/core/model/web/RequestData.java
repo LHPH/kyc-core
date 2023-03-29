@@ -7,7 +7,7 @@ import lombok.Getter;
 
 import java.util.Map;
 
-@Builder
+@Builder(toBuilder = true)
 @Getter
 public class RequestData<T> extends BaseModel {
 

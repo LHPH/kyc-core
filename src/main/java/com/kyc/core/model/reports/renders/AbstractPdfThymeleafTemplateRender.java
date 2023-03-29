@@ -1,4 +1,4 @@
-package com.kyc.core.model.reports.processors;
+package com.kyc.core.model.reports.renders;
 
 import com.kyc.core.exception.KycException;
 import com.kyc.core.model.web.RequestData;
@@ -14,15 +14,15 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public abstract class AbstractGeneratePdfThymeleafTemplate<T> {
+public abstract class AbstractPdfThymeleafTemplateRender<T> {
 
-    private static Logger LOGGER = LoggerFactory.getLogger(AbstractGeneratePdfThymeleafTemplate.class);
+    private static Logger LOGGER = LoggerFactory.getLogger(AbstractPdfThymeleafTemplateRender.class);
 
     private final String nameTemplate;
     private final KycMessages kycMessages;
     private SpringTemplateEngine templateEngine;
 
-    public AbstractGeneratePdfThymeleafTemplate(String nameTemplate, KycMessages kycMessages,SpringTemplateEngine templateEngine) {
+    public AbstractPdfThymeleafTemplateRender(String nameTemplate, KycMessages kycMessages, SpringTemplateEngine templateEngine) {
         this.nameTemplate = nameTemplate;
         this.kycMessages = kycMessages;
         this.templateEngine = templateEngine;
@@ -36,11 +36,11 @@ public abstract class AbstractGeneratePdfThymeleafTemplate<T> {
      * @return
      * @throws KycException
      */
-    public ByteArrayResource generateReport(RequestData<T> data) throws KycException {
+    public ByteArrayResource generateReport(String serialNumber, RequestData<T> data) throws KycException {
 
         try{
             ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            Context ctx = fillContext(data);
+            Context ctx = fillContext(serialNumber,data);
             String html = templateEngine.process(nameTemplate,ctx);
 
             String baseUri = new ClassPathResource("templates").getURL().toExternalForm();
@@ -60,5 +60,5 @@ public abstract class AbstractGeneratePdfThymeleafTemplate<T> {
         }
     }
 
-    protected abstract Context fillContext(RequestData<T> data);
+    protected abstract Context fillContext(String serialNumber,RequestData<T> data);
 }

@@ -1,9 +1,8 @@
-package com.kyc.core.model.reports.processors;
+package com.kyc.core.model.reports.renders;
 
 import com.kyc.core.exception.KycException;
 import com.kyc.core.model.web.RequestData;
 import com.kyc.core.properties.KycMessages;
-import org.apache.commons.io.IOUtils;
 import org.apache.poi.xwpf.usermodel.BodyElementType;
 import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.PositionInParagraph;
@@ -15,51 +14,24 @@ import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.apache.poi.xwpf.usermodel.XWPFTableCell;
 import org.apache.poi.xwpf.usermodel.XWPFTableRow;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ClassPathResource;
-
-import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractPdfWordTemplateRender<T> {
+public abstract class AbstractWordTemplateRender<T> extends AbstractReportTemplateRender{
 
-    private byte [] bytesTemplate;
-
-    private final String pathTemplate;
-    private final KycMessages kycMessages;
-
-    public AbstractPdfWordTemplateRender(String pathTemplate, KycMessages kycMessages){
-        this.pathTemplate = pathTemplate;
-        this.kycMessages = kycMessages;
+    public AbstractWordTemplateRender(String pathTemplate, KycMessages kycMessages){
+        super(pathTemplate,kycMessages);
     }
 
-    @PostConstruct
-    public void init() throws KycException {
-
-        ClassPathResource cl = new ClassPathResource(pathTemplate);
-        try(InputStream in = cl.getInputStream()){
-
-            bytesTemplate = IOUtils.toByteArray(in);
-        }
-        catch(IOException ioex){
-
-            throw KycException.builder()
-                    .exception(ioex)
-                    .errorData(kycMessages.getMessage(""))
-                    .build();
-        }
-    }
-
-    public ByteArrayResource generateReport(RequestData<T> data) throws KycException{
+    public ByteArrayResource generateReport(String serialNumber,RequestData<T> data) throws KycException{
 
         try{
-            XWPFDocument doc = new XWPFDocument(new ByteArrayInputStream(bytesTemplate));
+            XWPFDocument doc = new XWPFDocument(new ByteArrayInputStream(getBytesTemplate()));
 
-            Map<String,String> variables = fillVariables(doc,data);
+            Map<String,String> variables = fillVariables(doc,serialNumber,data);
             List<IBodyElement> bodyElements = doc.getBodyElements();
 
             for(Map.Entry<String,String> entry : variables.entrySet()){
@@ -77,12 +49,12 @@ public abstract class AbstractPdfWordTemplateRender<T> {
         catch(IOException ioex){
             throw KycException.builder()
                     .exception(ioex)
-                    .errorData(kycMessages.getMessage(""))
+                    .errorData(getKycMessages().getMessage(""))
                     .build();
         }
     }
 
-    protected abstract Map<String, String> fillVariables(XWPFDocument doc, RequestData<T> data);
+    protected abstract Map<String, String> fillVariables(XWPFDocument doc,String serialNumber, RequestData<T> data);
 
     protected abstract void additionalProcessing(XWPFDocument doc, RequestData<T> data);
 

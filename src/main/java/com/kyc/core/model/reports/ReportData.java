@@ -3,7 +3,6 @@ package com.kyc.core.model.reports;
 import com.kyc.core.model.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.core.io.Resource;
 
 import java.util.Date;
 
@@ -16,6 +15,5 @@ public class ReportData extends BaseModel {
     private String mimeType;
     private long size;
     private Date date;
-    private Resource resource;
 
 }

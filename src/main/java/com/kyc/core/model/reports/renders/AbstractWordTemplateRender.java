@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractWordTemplateRender<T> extends AbstractReportTemplateRender{
+public abstract class AbstractWordTemplateRender<T> extends AbstractStreamReportTemplateRender {
 
     public AbstractWordTemplateRender(String pathTemplate, KycMessages kycMessages){
         super(pathTemplate,kycMessages);

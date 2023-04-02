@@ -16,11 +16,9 @@ import org.springframework.core.io.ByteArrayResource;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.InputStream;
 import java.util.Map;
 
-public abstract class AbstractPdfJasperRender<T> extends AbstractReportTemplateRender{
+public abstract class AbstractPdfJasperRender<T> extends AbstractStreamReportTemplateRender {
 
     private static Logger LOGGER = LoggerFactory.getLogger(AbstractPdfJasperRender.class);
 

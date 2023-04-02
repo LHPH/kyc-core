@@ -14,14 +14,14 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Getter
-public abstract class AbstractReportTemplateRender implements InitializingBean {
+public abstract class AbstractStreamReportTemplateRender implements InitializingBean {
 
     private byte [] bytesTemplate;
 
     private final String pathTemplate;
     private final KycMessages kycMessages;
 
-    public AbstractReportTemplateRender(String pathTemplate, KycMessages kycMessages){
+    public AbstractStreamReportTemplateRender(String pathTemplate, KycMessages kycMessages){
         this.pathTemplate = pathTemplate;
         this.kycMessages = kycMessages;
     }

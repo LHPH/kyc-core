@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Objects;
 
-public abstract class AbstractPdfBoxTemplateRender<T> extends AbstractReportTemplateRender {
+public abstract class AbstractPdfBoxTemplateRender<T> extends AbstractStreamReportTemplateRender {
 
     public AbstractPdfBoxTemplateRender(String pathTemplate, KycMessages kycMessages){
         super(pathTemplate,kycMessages);

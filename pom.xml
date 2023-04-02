@@ -282,6 +282,8 @@
             <exclude>com/kyc/core/config/**</exclude>
             <exclude>com/kyc/core/enums/**</exclude>
             <exclude>com/kyc/core/model/**/*</exclude>
+            <exclude>com/kyc/core/constants/**/*</exclude>
+            <exclude>com/kyc/core/validation/model/**/*</exclude>
           </excludes>
         </configuration>
         <executions>

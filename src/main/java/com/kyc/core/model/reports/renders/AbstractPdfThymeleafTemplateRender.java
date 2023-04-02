@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
+import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
@@ -20,9 +21,9 @@ public abstract class AbstractPdfThymeleafTemplateRender<T> {
 
     private final String nameTemplate;
     private final KycMessages kycMessages;
-    private SpringTemplateEngine templateEngine;
+    private TemplateEngine templateEngine;
 
-    public AbstractPdfThymeleafTemplateRender(String nameTemplate, KycMessages kycMessages, SpringTemplateEngine templateEngine) {
+    public AbstractPdfThymeleafTemplateRender(String nameTemplate, KycMessages kycMessages, TemplateEngine templateEngine) {
         this.nameTemplate = nameTemplate;
         this.kycMessages = kycMessages;
         this.templateEngine = templateEngine;

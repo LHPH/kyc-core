@@ -21,14 +21,23 @@ public abstract class AbstractRuleValidation<T> implements RuleValidation<T> {
     }
 
     public boolean evaluate(InputData<T> inputData){
-        return required || !Objects.isNull(inputData.getData());
+        return isRequired() ||
+                (!Objects.isNull(inputData) &&
+                !Objects.isNull(inputData.getData()));
     }
 
     @Override
     public ResultValidation isValid(InputData<T> inputData) {
 
         if (evaluate(inputData)) {
-            return validate(inputData);
+
+            if(inputData!=null){
+                return validate(inputData);
+            }
+            return ResultValidation.builder()
+                    .valid(false)
+                    .error(getErrorMessage())
+                    .build();
         }
         return ResultValidation.builder()
                 .valid(true)
@@ -40,4 +49,14 @@ public abstract class AbstractRuleValidation<T> implements RuleValidation<T> {
     }
 
     public abstract ResultValidation validate(InputData<T> inputData);
+
+    @Override
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
+
+    @Override
+    public boolean isRequired() {
+        return required;
+    }
 }

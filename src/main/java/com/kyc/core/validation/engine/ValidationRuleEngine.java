@@ -21,11 +21,11 @@ public class ValidationRuleEngine {
         return results;
     }
 
-    public List<ResultValidation> evaluateRules(List<RuleValidation<Object>> rules, List<InputData<Object>> listData){
+    public List<ResultValidation> evaluateRules(List<RuleValidation> rules, List<InputData> listData){
 
         List<ResultValidation> results = new ArrayList<>();
         int cont = 0;
-        for(RuleValidation<Object> rule : rules){
+        for(RuleValidation rule : rules){
             ResultValidation result = rule.isValid(listData.get(cont));
             results.add(result);
             cont++;

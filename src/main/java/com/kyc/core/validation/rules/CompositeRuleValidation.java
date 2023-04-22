@@ -8,7 +8,6 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter
 public class CompositeRuleValidation<T> extends AbstractRuleValidation<T>{
 
     private List<RuleValidation<T>> delegates = new ArrayList<>();
@@ -30,5 +29,16 @@ public class CompositeRuleValidation<T> extends AbstractRuleValidation<T>{
         return ResultValidation.builder()
                 .valid(true)
                 .build();
+    }
+
+    public void setDelegates(List<RuleValidation<T>> rules){
+
+        if(rules!=null){
+
+            for(RuleValidation<T> rule : rules){
+                rule.setRequired(isRequired());
+                delegates.add(rule);
+            }
+        }
     }
 }

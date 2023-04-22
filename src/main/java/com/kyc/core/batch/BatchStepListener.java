@@ -54,47 +54,44 @@ public class BatchStepListener<I,O> extends StepListenerSupport<I,O> {
     @Override
     public void beforeRead() {
 
-        LOGGER.info("[{}] Begining to read records",stepName);
-    }
-
-    @Override
-    public void onReadError(Exception ex) {
-        super.onReadError(ex);
+        LOGGER.info("[{}] Beginning to read records",stepName);
     }
 
     @Override
     public void afterWrite(List<? extends O> items) {
 
-        LOGGER.info("[{}] It was writen {} records", stepName,items.size());
+        LOGGER.info("[{}] It was written {} records", stepName,items.size());
     }
 
     @Override
     public void beforeWrite(List<? extends O> items) {
 
-        LOGGER.info("[{}] Begining to write {} records",stepName,items.size());
+        LOGGER.info("[{}] Beginning to write {} records",stepName,items.size());
         super.beforeWrite(items);
     }
 
     @Override
     public void onWriteError(Exception exception, List<? extends O> items) {
 
-        LOGGER.error("[{}] An error has ocurrend writing the elements", stepName,exception);
+        LOGGER.error("[{}] An error has occurred writing the elements", stepName,exception);
     }
 
     @Override
     public void afterProcess(I item, O result) {
 
+        LOGGER.info("[{}] The item {} was processed",stepName,item);
+        super.afterProcess(item,result);
     }
 
     @Override
     public void beforeProcess(I item) {
 
-        LOGGER.info("[{}] Begining to process record {}",stepName,item);
+        LOGGER.info("[{}] Beginning to process record {}",stepName,item);
         super.beforeProcess(item);
     }
 
     @Override
     public void onProcessError(I item, Exception e) {
-        LOGGER.error("[{}] An error has ocurrend processing the element {}", stepName,item,e);
+        LOGGER.error("[{}] An error has occurred processing the element {}", stepName,item,e);
     }
 }

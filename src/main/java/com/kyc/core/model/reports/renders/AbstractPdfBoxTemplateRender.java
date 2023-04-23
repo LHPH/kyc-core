@@ -9,6 +9,8 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDCheckBox;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import org.apache.pdfbox.pdmodel.interactive.form.PDRadioButton;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ByteArrayResource;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,6 +18,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 public abstract class AbstractPdfBoxTemplateRender<T> extends AbstractStreamReportTemplateRender {
+
+    private static Logger LOGGER = LoggerFactory.getLogger(AbstractPdfBoxTemplateRender.class);
 
     public AbstractPdfBoxTemplateRender(String pathTemplate, KycMessages kycMessages){
         super(pathTemplate,kycMessages);

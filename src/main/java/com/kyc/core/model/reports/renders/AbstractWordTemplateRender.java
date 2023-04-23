@@ -3,6 +3,7 @@ package com.kyc.core.model.reports.renders;
 import com.kyc.core.exception.KycException;
 import com.kyc.core.model.web.RequestData;
 import com.kyc.core.properties.KycMessages;
+import org.apache.poi.ooxml.POIXMLException;
 import org.apache.poi.xwpf.usermodel.BodyElementType;
 import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.PositionInParagraph;
@@ -28,8 +29,7 @@ public abstract class AbstractWordTemplateRender<T> extends AbstractStreamReport
 
     public ByteArrayResource generateReport(String serialNumber,RequestData<T> data) throws KycException{
 
-        try{
-            XWPFDocument doc = new XWPFDocument(new ByteArrayInputStream(getBytesTemplate()));
+        try(XWPFDocument doc = new XWPFDocument(new ByteArrayInputStream(getBytesTemplate()))){
 
             Map<String,String> variables = fillVariables(doc,serialNumber,data);
             List<IBodyElement> bodyElements = doc.getBodyElements();
@@ -46,7 +46,7 @@ public abstract class AbstractWordTemplateRender<T> extends AbstractStreamReport
             doc.write(bytes);
             return new ByteArrayResource(bytes.toByteArray());
         }
-        catch(IOException ioex){
+        catch(IOException | POIXMLException ioex){
             throw KycException.builder()
                     .exception(ioex)
                     .errorData(getKycMessages().getMessage(""))

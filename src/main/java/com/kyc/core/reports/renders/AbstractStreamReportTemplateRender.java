@@ -1,4 +1,4 @@
-package com.kyc.core.model.reports.renders;
+package com.kyc.core.reports.renders;
 
 import com.kyc.core.exception.KycException;
 import com.kyc.core.model.web.RequestData;

@@ -1,4 +1,4 @@
-package com.kyc.core.model.reports.renders;
+package com.kyc.core.reports.renders;
 
 import com.kyc.core.exception.KycException;
 import com.kyc.core.model.web.RequestData;
@@ -12,7 +12,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.exceptions.TemplateEngineException;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

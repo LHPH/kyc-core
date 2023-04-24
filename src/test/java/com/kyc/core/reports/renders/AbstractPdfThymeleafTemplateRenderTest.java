@@ -1,34 +1,26 @@
 package com.kyc.core.reports.renders;
 
 import com.kyc.core.exception.KycException;
-import com.kyc.core.model.reports.renders.AbstractPdfThymeleafTemplateRender;
 import com.kyc.core.model.web.RequestData;
 import com.kyc.core.properties.KycMessages;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.support.StaticApplicationContext;
 import org.springframework.core.io.ByteArrayResource;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.exceptions.TemplateOutputException;
-import org.thymeleaf.exceptions.TemplateProcessingException;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.StringTemplateResolver;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class AbstractPdfThymeleafTemplateRenderTest {

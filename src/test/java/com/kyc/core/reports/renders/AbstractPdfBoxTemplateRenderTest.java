@@ -1,10 +1,8 @@
 package com.kyc.core.reports.renders;
 
 import com.kyc.core.exception.KycException;
-import com.kyc.core.model.reports.renders.AbstractPdfBoxTemplateRender;
 import com.kyc.core.model.web.RequestData;
 import com.kyc.core.properties.KycMessages;
-import com.kyc.core.util.TestsUtil;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

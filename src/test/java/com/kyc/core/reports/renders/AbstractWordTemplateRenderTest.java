@@ -1,10 +1,8 @@
 package com.kyc.core.reports.renders;
 
 import com.kyc.core.exception.KycException;
-import com.kyc.core.model.reports.renders.AbstractWordTemplateRender;
 import com.kyc.core.model.web.RequestData;
 import com.kyc.core.properties.KycMessages;
-import org.apache.poi.ooxml.POIXMLDocument;
 import org.apache.poi.ooxml.POIXMLException;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.junit.jupiter.api.Assertions;

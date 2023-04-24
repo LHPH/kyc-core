@@ -1,7 +1,6 @@
 package com.kyc.core.reports.renders;
 
 import com.kyc.core.exception.KycException;
-import com.kyc.core.model.reports.renders.AbstractPdfJasperRender;
 import com.kyc.core.model.web.RequestData;
 import com.kyc.core.properties.KycMessages;
 import org.junit.jupiter.api.Assertions;

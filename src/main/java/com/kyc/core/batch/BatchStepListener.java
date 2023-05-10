@@ -94,4 +94,9 @@ public class BatchStepListener<I,O> extends StepListenerSupport<I,O> {
     public void onProcessError(I item, Exception e) {
         LOGGER.error("[{}] An error has occurred processing the element {}", stepName,item,e);
     }
+
+    @Override
+    public void onReadError(Exception ex) {
+        LOGGER.error("[{}] An error has occurred in reading {}", stepName,ex.getMessage());
+    }
 }

@@ -241,6 +241,20 @@
       <scope>provided</scope>
     </dependency>
 
+    <dependency>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-core</artifactId>
+      <version>3.4.29</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-test</artifactId>
+      <version>3.4.29</version>
+      <scope>test</scope>
+    </dependency>
+
     <!--
     <dependency>
       <groupId>junit</groupId>

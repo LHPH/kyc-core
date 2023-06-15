@@ -17,6 +17,7 @@ import java.util.Date;
 
 import static com.kyc.core.constants.GeneralConstants.FORMAT_DATE_YEAR_MONTH_DAY_TIME_WITH_HYPHEN_ENGLISH;
 import static com.kyc.core.constants.GeneralConstants.FORMAT_DATE_YEAR_MONTH_DAY_WITH_HYPHEN_ENGLISH;
+import static com.kyc.core.util.GeneralUtil.paramNotNull;
 
 
 public final class DateUtil {
@@ -25,14 +26,17 @@ public final class DateUtil {
 
     public static Date stringToDate(String date,String format) {
 
+        paramNotNull("format",format);
         try {
-            SimpleDateFormat sd = new SimpleDateFormat(format);
-            return sd.parse(date);
+            if(date!=null){
+                SimpleDateFormat sd = new SimpleDateFormat(format);
+                return sd.parse(date);
+            }
         }
         catch(ParseException ex) {
             LOGGER.error(" ",ex);
-            return null;
         }
+        return null;
     }
 
     public static Date stringToDate(String date) {
@@ -47,6 +51,7 @@ public final class DateUtil {
 
     public static LocalDate stringToLocalDate(String date,String format) {
 
+        paramNotNull("format",format);
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
             return LocalDate.parse(date,formatter);
@@ -64,6 +69,7 @@ public final class DateUtil {
 
     public static LocalDateTime stringToLocalDateTime(String date,String format) {
 
+        paramNotNull("format",format);
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
             return LocalDateTime.parse(date,formatter);
@@ -76,6 +82,7 @@ public final class DateUtil {
 
     public static String dateToString(Date date,String format) {
 
+        paramNotNull("format",format);
         SimpleDateFormat sd = new SimpleDateFormat(format);
         return sd.format(date);
 
@@ -88,6 +95,7 @@ public final class DateUtil {
 
     public static String dateLocalToString(LocalDate date,String format) {
 
+        paramNotNull("format",format);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
         return formatter.format(date);
     }
@@ -99,6 +107,7 @@ public final class DateUtil {
 
     public static String dateLocalTimeToString(LocalDateTime date,String format) {
 
+        paramNotNull("format",format);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
         return formatter.format(date);
     }

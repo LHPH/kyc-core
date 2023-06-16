@@ -2,6 +2,7 @@ package com.kyc.core.exception;
 
 import com.kyc.core.enums.MessageType;
 import com.kyc.core.model.web.MessageData;
+import graphql.ErrorType;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -20,19 +21,21 @@ public class KycGraphqlExceptionTest {
 
         MessageData messageData = new MessageData("CODE","MESSAGE", MessageType.ERROR);
         KycGraphqlException exception = KycGraphqlException.builderGraphqlException()
+                .inputData("inputData")
+                .outputData("outputData")
+                .exception(new NullPointerException())
+                .errorType(ErrorType.DataFetchingException)
                 .errorData(messageData)
                 .build();
         Map<String,Object> extensions = exception.getExtensions();
         Assertions.assertNotNull(exception);
-        Assertions.assertEquals("CODE",exception.getExtensions().get("code"));
+        Assertions.assertEquals("CODE",extensions.get("code"));
     }
 
     @Test
     public void getExtensions_processNullMessageData_returnExtensionsEmpty(){
 
-        MessageData messageData = null;
         KycGraphqlException exception = KycGraphqlException.builderGraphqlException()
-                .errorData(messageData)
                 .build();
         Map<String,Object> extensions = exception.getExtensions();
         Assertions.assertNotNull(exception);

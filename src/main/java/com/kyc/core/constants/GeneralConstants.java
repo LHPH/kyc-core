@@ -15,6 +15,7 @@ public final class GeneralConstants {
     public static final String EXC_HTTP_STATUS_LABEL = "Http Status: ";
     public static final String EXC_GRAPHQL_ERROR_TYPE = "Error Type: ";
     public static final String EXC_GRAPHQL_EXTENSIONS = "Extensions: ";
+    public static final String EXC_HTTP_SOAP_FAULT_CODE_LABEL = "Fault Code: ";
 
 
     private GeneralConstants(){}

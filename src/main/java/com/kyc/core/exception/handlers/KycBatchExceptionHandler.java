@@ -23,6 +23,9 @@ public class KycBatchExceptionHandler implements ExceptionHandler {
             inputData = exception.getInput();
             exc = exception;
         }
+        else if(throwable instanceof KycBatchException){
+            throw (KycBatchException)throwable;
+        }
         else{
             exc = (Exception) throwable;
         }

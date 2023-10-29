@@ -13,15 +13,16 @@
   <url>http://www.example.com</url>
 
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <spring.version>5.3.19</spring.version>
-    <spring.data-release.version>2021.1.4</spring.data-release.version>
-    <spring.security.version>5.6.3</spring.security.version>
-    <spring.boot.version>2.6.2</spring.boot.version>
-    <spring.batch.version>4.3.6</spring.batch.version>
-    <openhtml.version>1.0.10</openhtml.version>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <maven.compiler.source>1.8</maven.compiler.source>
+      <maven.compiler.target>1.8</maven.compiler.target>
+      <spring.version>5.3.29</spring.version>
+      <spring.data-release.version>2021.2.14</spring.data-release.version>
+      <spring.security.version>5.8.5</spring.security.version>
+      <spring.boot.version>2.7.14</spring.boot.version>
+      <spring.batch.version>4.3.8</spring.batch.version>
+      <spring.ws.version>3.1.7</spring.ws.version>
+      <openhtml.version>1.0.10</openhtml.version>
   </properties>
 
   <dependencyManagement>
@@ -200,7 +201,7 @@
     <dependency>
       <groupId>com.graphql-java</groupId>
       <artifactId>graphql-java</artifactId>
-      <version>17.3</version>
+      <version>18.5</version>
       <scope>provided</scope>
     </dependency>
 
@@ -237,7 +238,7 @@
     <dependency>
       <groupId>net.sf.jasperreports</groupId>
       <artifactId>jasperreports</artifactId>
-      <version>6.20.1</version>
+      <version>6.20.5</version>
       <scope>provided</scope>
     </dependency>
 
@@ -253,6 +254,20 @@
       <artifactId>reactor-test</artifactId>
       <version>3.4.29</version>
       <scope>test</scope>
+    </dependency>
+
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-web-services</artifactId>
+          <version>${spring.boot.version}</version>
+          <scope>provided</scope>
+      </dependency>
+
+    <dependency>
+      <groupId>jakarta.xml.ws</groupId>
+      <artifactId>jakarta.xml.ws-api</artifactId>
+      <version>2.3.3</version>
+      <scope>provided</scope>
     </dependency>
 
     <!--
@@ -277,7 +292,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.0</version>
+        <version>3.1.2</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

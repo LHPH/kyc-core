@@ -263,12 +263,14 @@
           <scope>provided</scope>
       </dependency>
 
+      <!--
     <dependency>
       <groupId>jakarta.xml.ws</groupId>
       <artifactId>jakarta.xml.ws-api</artifactId>
       <version>2.3.3</version>
       <scope>provided</scope>
     </dependency>
+    -->
 
     <!--
     <dependency>

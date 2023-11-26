@@ -9,6 +9,8 @@ public final class BatchConstants {
     public static final String KYC_BATCH_READER = "READER";
     public static final String KYC_BATCH_PROCESSOR = "PROCESSOR";
     public static final String KYC_BATCH_WRITER = "WRITER";
+    public static final String BATCH_COMPLETED = "COMPLETED";
+    public static final String BATCH_PARTIAL_COMPLETED = "PARTIAL_COMPLETED";
 
 
     public static final String KYC_BATCH_JOB_TEMPLATE = "KYC-BATCH-%s-JOB-%s";

@@ -1,7 +1,7 @@
 package com.kyc.core.exception.handlers;
 
 import com.kyc.core.model.MockObject;
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import com.kyc.core.model.web.MessageFieldErrorData;
 import com.kyc.core.model.web.ResponseData;
 import org.junit.Assert;

@@ -1,6 +1,6 @@
 package com.kyc.core.exception.handlers;
 
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import com.kyc.core.model.web.ResponseData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

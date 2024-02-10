@@ -1,7 +1,7 @@
 package com.kyc.core.exception;
 
 
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import graphql.ErrorClassification;
 import lombok.Builder;
 import lombok.Getter;

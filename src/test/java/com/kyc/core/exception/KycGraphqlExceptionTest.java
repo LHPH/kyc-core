@@ -1,7 +1,7 @@
 package com.kyc.core.exception;
 
 import com.kyc.core.enums.MessageType;
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import graphql.ErrorType;
 import org.junit.Assert;
 import org.junit.Test;

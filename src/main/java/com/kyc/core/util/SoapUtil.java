@@ -1,5 +1,6 @@
 package com.kyc.core.util;
 
+import org.springframework.ws.FaultAwareWebServiceMessage;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.soap.SoapBody;
 import org.springframework.ws.soap.SoapEnvelope;
@@ -7,6 +8,7 @@ import org.springframework.ws.soap.SoapFaultDetail;
 import org.springframework.ws.soap.SoapFaultDetailElement;
 import org.springframework.ws.soap.SoapHeader;
 import org.springframework.ws.soap.SoapMessage;
+import org.springframework.ws.soap.client.SoapFaultClientException;
 
 import javax.xml.bind.DatatypeConverter;
 import java.util.Calendar;
@@ -43,6 +45,21 @@ public final class SoapUtil {
         SoapMessage soapMessage = getSoapMessage(webServiceMessage);
         SoapEnvelope soapEnvelope = soapMessage.getEnvelope();
         return soapEnvelope.getHeader();
+    }
+
+    public static boolean hasFault(final WebServiceMessage response) {
+        if (response instanceof FaultAwareWebServiceMessage) {
+            FaultAwareWebServiceMessage faultMessage = (FaultAwareWebServiceMessage) response;
+            return faultMessage.hasFault();
+        }
+        return false;
+    }
+
+    public static void throwExceptionIfFault(final WebServiceMessage response){
+
+        if(hasFault(response)){
+            throw new SoapFaultClientException((SoapMessage) response);
+        }
     }
 
     public static String getDetailContent(SoapFaultDetail soapFaultDetail, String typeDetail){

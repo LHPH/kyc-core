@@ -1,25 +1,37 @@
 package com.kyc.core.exception.handlers;
 
 import com.kyc.core.exception.KycSoapException;
-import com.kyc.core.model.web.MessageData;
-import com.kyc.core.util.DateUtil;
-import lombok.AllArgsConstructor;
+import com.kyc.core.model.MessageData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.oxm.Marshaller;
+import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.soap.SoapFault;
 import org.springframework.ws.soap.SoapFaultDetail;
 import org.springframework.ws.soap.server.endpoint.AbstractSoapFaultDefinitionExceptionResolver;
 import org.springframework.ws.soap.server.endpoint.SoapFaultDefinition;
 
-import javax.xml.namespace.QName;
-import java.util.Date;
+import javax.xml.transform.Result;
+import java.io.IOException;
 
-@AllArgsConstructor
 public class KycGenericSoapExceptionHandler extends AbstractSoapFaultDefinitionExceptionResolver {
 
     private static final Logger LOGGER = LogManager.getLogger(KycGenericSoapExceptionHandler.class);
 
-    private MessageData messageData;
+    private final MessageData messageData;
+    private final Marshaller marshaller;
+
+    public KycGenericSoapExceptionHandler(MessageData messageData) {
+
+        this.messageData = messageData;
+        marshaller = new Jaxb2Marshaller();
+        ((Jaxb2Marshaller)marshaller).setClassesToBeBound(MessageData.class);
+    }
+
+    public KycGenericSoapExceptionHandler(MessageData messageData, Marshaller marshaller) {
+        this.messageData = messageData;
+        this.marshaller = marshaller;
+    }
 
     @Override
     protected SoapFaultDefinition getFaultDefinition(Object o, Exception e) {
@@ -43,31 +55,23 @@ public class KycGenericSoapExceptionHandler extends AbstractSoapFaultDefinitionE
     @Override
     protected void customizeFault(Object endpoint, Exception ex, SoapFault fault) {
 
-        String message;
-        String type;
-        String timestamp;
-        if(ex instanceof KycSoapException){
+        try{
+            MessageData messageData;
+            if(ex instanceof KycSoapException){
 
-            KycSoapException kycSoapException = (KycSoapException)ex;
-            MessageData messageData = kycSoapException.getErrorData();
+                KycSoapException kycSoapException = (KycSoapException)ex;
+                messageData = kycSoapException.getErrorData();
+            }
+            else{
+                messageData = this.messageData;
+            }
 
-            message = messageData.getMessage();
-            type = messageData.getType().toString();
-            timestamp = DateUtil.dateToString(Date.from(messageData.getTime()),"yyyy-MM-dd HH:mm:ss");
+            SoapFaultDetail soapFaultDetail = fault.addFaultDetail();
+            Result result = soapFaultDetail.getResult();
+            marshaller.marshal(messageData,result);
         }
-        else{
-
-            message = this.messageData.getMessage();
-            type = this.messageData.getType().toString();
-            timestamp = DateUtil.dateToString(new Date(),"yyyy-MM-dd HH:mm:ss");
+        catch (IOException jaxbex){
+            LOGGER.error("No se pudo hacer la conversion ",jaxbex);
         }
-
-        SoapFaultDetail soapFaultDetail = fault.addFaultDetail();
-        soapFaultDetail.addFaultDetailElement(QName.valueOf("message"))
-                .addText(message);
-        soapFaultDetail.addFaultDetailElement(QName.valueOf("type"))
-                .addText(type);
-        soapFaultDetail.addFaultDetailElement(QName.valueOf("time"))
-                .addText(timestamp);
     }
 }

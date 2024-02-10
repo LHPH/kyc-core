@@ -14,12 +14,12 @@
 
   <properties>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <maven.compiler.source>1.8</maven.compiler.source>
-      <maven.compiler.target>1.8</maven.compiler.target>
+      <maven.compiler.source>17</maven.compiler.source>
+      <maven.compiler.target>17</maven.compiler.target>
       <spring.version>5.3.29</spring.version>
       <spring.data-release.version>2021.2.14</spring.data-release.version>
       <spring.security.version>5.8.5</spring.security.version>
-      <spring.boot.version>2.7.14</spring.boot.version>
+      <spring.boot.version>2.7.18</spring.boot.version>
       <spring.batch.version>4.3.8</spring.batch.version>
       <spring.ws.version>3.1.7</spring.ws.version>
       <openhtml.version>1.0.10</openhtml.version>
@@ -175,7 +175,7 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <optional>true</optional>
-      <version>1.18.16</version>
+      <version>1.18.22</version>
     </dependency>
 
     <dependency>
@@ -263,6 +263,15 @@
           <scope>provided</scope>
       </dependency>
 
+    <!--XmlAdapters-->
+    <dependency>
+      <groupId>io.github.threeten-jaxb</groupId>
+      <artifactId>threeten-jaxb-core</artifactId>
+      <version>1.2</version>
+      <!--<version>2.1.0</version> Jakarta -->
+      <scope>provided</scope>
+    </dependency>
+
       <!--
     <dependency>
       <groupId>jakarta.xml.ws</groupId>
@@ -294,7 +303,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.1.2</version>
+        <version>3.2.5</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -311,7 +320,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.5</version>
+        <version>0.8.8</version>
         <configuration>
           <excludes>
             <exclude>com/kyc/core/config/**</exclude>

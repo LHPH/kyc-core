@@ -1,7 +1,7 @@
 package com.kyc.core.exception.handlers;
 
 import com.kyc.core.enums.MessageType;
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import com.kyc.core.model.web.ResponseData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

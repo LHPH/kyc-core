@@ -2,7 +2,7 @@ package com.kyc.core.batch.tasklets;
 
 import com.kyc.core.enums.MessageType;
 import com.kyc.core.exception.KycBatchException;
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;

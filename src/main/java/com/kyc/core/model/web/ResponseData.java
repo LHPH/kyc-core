@@ -1,6 +1,7 @@
 package com.kyc.core.model.web;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kyc.core.model.MessageData;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

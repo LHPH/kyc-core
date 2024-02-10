@@ -1,6 +1,6 @@
 package com.kyc.core.model.properties;
 
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

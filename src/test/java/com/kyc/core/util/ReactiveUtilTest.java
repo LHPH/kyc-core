@@ -1,6 +1,6 @@
 package com.kyc.core.util;
 
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.extension.ExtendWith;

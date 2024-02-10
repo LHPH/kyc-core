@@ -1,7 +1,7 @@
 package com.kyc.core.properties;
 
 import com.kyc.core.model.properties.CatalogMessages;
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

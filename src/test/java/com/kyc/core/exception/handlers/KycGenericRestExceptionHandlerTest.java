@@ -2,7 +2,7 @@ package com.kyc.core.exception.handlers;
 
 import com.kyc.core.enums.MessageType;
 import com.kyc.core.exception.KycRestException;
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import com.kyc.core.model.web.ResponseData;
 import org.junit.Assert;
 import org.junit.Test;

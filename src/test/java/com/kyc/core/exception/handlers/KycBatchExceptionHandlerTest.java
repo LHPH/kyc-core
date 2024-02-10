@@ -1,7 +1,7 @@
 package com.kyc.core.exception.handlers;
 
 import com.kyc.core.exception.KycBatchException;
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,7 +1,7 @@
 package com.kyc.core.security;
 
 import com.kyc.core.exception.KycException;
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 

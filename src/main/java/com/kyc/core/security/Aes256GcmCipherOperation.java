@@ -1,7 +1,7 @@
 package com.kyc.core.security;
 
 import com.kyc.core.exception.KycException;
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import com.kyc.core.util.CryptoUtil;
 
 import javax.crypto.Cipher;

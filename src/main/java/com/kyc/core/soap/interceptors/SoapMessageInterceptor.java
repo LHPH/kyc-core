@@ -1,14 +1,11 @@
 package com.kyc.core.soap.interceptors;
 
-import com.kyc.core.util.SoapUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
-import org.springframework.ws.soap.SoapBody;
-import org.springframework.ws.soap.SoapFault;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -41,9 +38,6 @@ public class SoapMessageInterceptor implements ClientInterceptor {
     @Override
     public boolean handleFault(MessageContext messageContext) throws WebServiceClientException {
 
-        //SoapBody soapBody = SoapUtil.getSoapBody(messageContext.getResponse());
-        //SoapFault soapFault = soapBody.getFault();
-        LOGGER.info("**********************************");
         printWebServiceMessage(messageContext.getResponse(),"Fault");
         return true;
     }

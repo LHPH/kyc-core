@@ -1,7 +1,7 @@
 package com.kyc.core.util;
 
 import com.kyc.core.exception.KycRestException;
-import com.kyc.core.model.web.MessageData;
+import com.kyc.core.model.MessageData;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.http.HttpStatus;
 import reactor.core.publisher.Mono;

@@ -2,6 +2,8 @@ package com.kyc.core.util;
 
 import com.kyc.core.validation.model.RuleValidation;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.RegExUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -124,6 +126,17 @@ public final class GeneralUtil {
             newMap.put(entry.getKey(),Objects.toString(entry.getValue(),null));
         }
         return newMap;
+    }
+
+
+    public static String maskValue(String value, String maskChar, int limit){
+
+        if(StringUtils.isNotEmpty(value)){
+
+            String part = StringUtils.substring(value,value.length()-limit,value.length());
+            return StringUtils.leftPad(part,value.length(),maskChar);
+        }
+        return "";
     }
 
     private GeneralUtil(){}

@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -134,6 +135,14 @@ public final class DateUtil {
 
     public static Date localDateTimeToDate(LocalDateTime date) {
         return Date.from(date.atZone(ZoneId.of("UTC-6")).toInstant());
+    }
+
+    public static Instant localDateTimeToInstant(LocalDateTime date){
+        return date.atZone(ZoneId.of("UTC-6")).toInstant();
+    }
+
+    public static Instant localDateToInstant(LocalDate date){
+        return date.atStartOfDay(ZoneId.of("UTC-6")).toInstant();
     }
 
     public static Long getDifference(LocalDateTime first, LocalDateTime second, ChronoUnit unit){

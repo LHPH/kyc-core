@@ -66,7 +66,7 @@ public class AbstractPdfThymeleafTemplateRenderTest {
 
        Assertions.assertThrows(KycException.class,()->{
 
-           AbstractPdfThymeleafTemplateRender render = new AbstractPdfThymeleafTemplateRender("test_thymeleaf",new KycMessages(),templateEngine,"templates"){
+           AbstractPdfThymeleafTemplateRender render = new AbstractPdfThymeleafTemplateRender("test_thymeleaf",new KycMessages(),templateEngine,"templates2"){
 
                @Override
                protected Context fillContext(String serialNumber, RequestData data) {

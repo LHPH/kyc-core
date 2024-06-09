@@ -21,4 +21,5 @@ public class JWTData extends BaseModel {
 
     private String key;
     private String channel;
+    private String role;
 }

@@ -43,6 +43,7 @@ public final class TokenUtil {
                 .expirationTime(data.getExpirationTime())
                 .claim("key",data.getKey())
                 .claim("channel",data.getChannel())
+                .claim("role",data.getRole())
                 .build();
 
         SignedJWT signedJWT = new SignedJWT(new JWSHeader(algorithm),claimsSet);
@@ -67,6 +68,7 @@ public final class TokenUtil {
             data.setExpirationTime(claimsSet.getExpirationTime());
             data.setKey(Objects.toString(claimsSet.getClaim("key"),null));
             data.setChannel(Objects.toString(claimsSet.getClaim("channel"),null));
+            data.setRole(Objects.toString(claimsSet.getClaim("role"),null));
             return data;
 
         }

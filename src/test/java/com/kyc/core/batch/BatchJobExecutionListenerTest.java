@@ -7,7 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobInstance;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @ExtendWith(MockitoExtension.class)
@@ -20,10 +22,10 @@ public class BatchJobExecutionListenerTest {
     @BeforeEach
     public void setUp(){
 
-        jobExecution = new JobExecution(1L,null,"TEST");
+        jobExecution = new JobExecution(new JobInstance(1L,"TEST"),null);
         jobExecution.setExitStatus(ExitStatus.COMPLETED);
-        jobExecution.setCreateTime(new Date());
-        jobExecution.setEndTime(new Date());
+        jobExecution.setCreateTime(LocalDateTime.now());
+        jobExecution.setEndTime(LocalDateTime.now());
     }
 
     @Test

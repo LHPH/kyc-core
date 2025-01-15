@@ -1,49 +1,22 @@
 package com.kyc.core.persistence.entity;
 
 import java.io.Serializable;
+
+import com.kyc.core.persistence.entity.base.BaseKycUser;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.util.Date;
 
 @Table(name = "KYC_USER")
 @Entity
-@Data
 @NoArgsConstructor
-public class KycUser implements Serializable {
-
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "USERNAME")
-    private String username;
-
-    @Column(name ="SECRET")
-    private String secret;
-
-    @Column(name ="ACTIVE")
-    private Boolean active;
-
-    @Column(name ="LOCKED")
-    private Boolean locked;
-
-    @Column(name ="DATE_CREATION")
-    private Date dateCreation;
-
-    @Column(name = "DATE_UPDATED")
-    private Date dateUpdated;
-
-    @ManyToOne
-    @JoinColumn(name = "USER_TYPE",referencedColumnName = "ID")
-    private KycUserType userType;
-}
+public class KycUser extends BaseKycUser implements Serializable {}

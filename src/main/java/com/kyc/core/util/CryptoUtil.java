@@ -1,14 +1,25 @@
 package com.kyc.core.util;
 
+import org.springframework.core.io.Resource;
+
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.UnrecoverableEntryException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 
@@ -45,23 +56,24 @@ public class CryptoUtil {
         return keyPairGenerator.generateKeyPair();
     }
 
+    public static SecretKey loadAesKeyFromKeystore(Resource resource,
+                                                   String secret,
+                                                   String keyName,
+                                                   String keySecret,
+                                                   String type) throws IOException, KeyStoreException, CertificateException, NoSuchAlgorithmException, UnrecoverableEntryException {
 
 
+        try(InputStream in = resource.getInputStream()){
 
+            KeyStore keyStore = KeyStore.getInstance(type);
+            keyStore.load(in,secret.toCharArray());
 
+            if(!keyStore.containsAlias(keyName)){
+                throw new UnrecoverableEntryException("No key with name "+keyName);
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            Key key = keyStore.getKey(keyName,keySecret.toCharArray());
+            return new SecretKeySpec(key.getEncoded(),"AES");
+        }
+    }
 }

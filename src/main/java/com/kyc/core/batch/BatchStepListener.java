@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.listener.StepListenerSupport;
+import org.springframework.batch.item.Chunk;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -24,13 +26,13 @@ public class BatchStepListener<I,O> extends StepListenerSupport<I,O> {
     public ExitStatus afterStep(StepExecution stepExecution) {
 
         stepName = ObjectUtils.defaultIfNull(stepName,stepExecution.getStepName());
-        Date startDate = stepExecution.getStartTime();
-        Date finishDate = stepExecution.getEndTime();
+        LocalDateTime startDate = stepExecution.getStartTime();
+        LocalDateTime finishDate = stepExecution.getEndTime();
         ExitStatus exitStatus = stepExecution.getExitStatus();
-        int readCount = stepExecution.getReadCount();
-        int rollbackCount = stepExecution.getRollbackCount();
-        int skipCount = stepExecution.getSkipCount();
-        int writeCount = stepExecution.getWriteCount();
+        long readCount = stepExecution.getReadCount();
+        long rollbackCount = stepExecution.getRollbackCount();
+        long skipCount = stepExecution.getSkipCount();
+        long writeCount = stepExecution.getWriteCount();
 
         LOGGER.info("[{}] Status: [{}], Starting: {}, Finish: {}, Read Count: {}," +
                         " Write Count: {}, Skip Count: {}, Rollback Count: {}",
@@ -58,20 +60,20 @@ public class BatchStepListener<I,O> extends StepListenerSupport<I,O> {
     }
 
     @Override
-    public void afterWrite(List<? extends O> items) {
+    public void afterWrite(Chunk<? extends O> chunk) {
 
-        LOGGER.info("[{}] It was written {} records", stepName,items.size());
+        LOGGER.info("[{}] It was written {} records", stepName,chunk.getItems().size());
     }
 
     @Override
-    public void beforeWrite(List<? extends O> items) {
+    public void beforeWrite(Chunk<? extends O> chunk) {
 
-        LOGGER.info("[{}] Beginning to write {} records",stepName,items.size());
-        super.beforeWrite(items);
+        LOGGER.info("[{}] Beginning to write {} records",stepName,chunk.getItems().size());
+        super.beforeWrite(chunk);
     }
 
     @Override
-    public void onWriteError(Exception exception, List<? extends O> items) {
+    public void onWriteError(Exception exception, Chunk<? extends O> chunk) {
 
         LOGGER.error("[{}] An error has occurred writing the elements", stepName,exception);
     }

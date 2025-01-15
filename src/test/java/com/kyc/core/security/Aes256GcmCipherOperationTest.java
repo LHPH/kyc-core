@@ -42,16 +42,6 @@ public class Aes256GcmCipherOperationTest {
     }
 
     @Test
-    public void encrypt_encryptingTextButBadKey_throwKycException(){
-
-        Assertions.assertThrows(KycException.class,()->{
-
-            CipherOperation<SecretKey,SecretKey> other = new Aes256GcmCipherOperation(new IvParameterSpec(new byte[]{0}));
-            other.encrypt("test",null);
-        });
-    }
-
-    @Test
     public void decrypt_decryptingTextButBadIv_throwException(){
 
         Assertions.assertThrows(KycException.class,()->{

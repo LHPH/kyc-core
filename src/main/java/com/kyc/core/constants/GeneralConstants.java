@@ -17,6 +17,6 @@ public final class GeneralConstants {
     public static final String EXC_GRAPHQL_EXTENSIONS = "Extensions: ";
     public static final String EXC_HTTP_SOAP_FAULT_CODE_LABEL = "Fault Code: ";
 
-
+    public static final String CORRELATION_ID_HEADER = "kyc-correlation-id";
     private GeneralConstants(){}
 }

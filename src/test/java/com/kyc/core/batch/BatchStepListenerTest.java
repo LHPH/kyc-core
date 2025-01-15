@@ -7,8 +7,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.batch.core.ExitStatus;
 import org.springframework.batch.core.JobExecution;
+import org.springframework.batch.core.JobInstance;
 import org.springframework.batch.core.StepExecution;
+import org.springframework.batch.item.Chunk;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -22,10 +25,10 @@ public class BatchStepListenerTest {
     @BeforeEach
     public void setUp(){
 
-        JobExecution jobExecution = new JobExecution(1L,null,"TEST");
+        JobExecution jobExecution = new JobExecution(new JobInstance(1L,"TEST"),null);
         jobExecution.setExitStatus(ExitStatus.COMPLETED);
-        jobExecution.setCreateTime(new Date());
-        jobExecution.setEndTime(new Date());
+        jobExecution.setCreateTime(LocalDateTime.now());
+        jobExecution.setEndTime(LocalDateTime.now());
 
         stepExecution = new StepExecution("STEP",jobExecution,1L);
     }
@@ -57,13 +60,13 @@ public class BatchStepListenerTest {
     @Test
     public void beforeWrite_processData_notThrowError(){
 
-        Assertions.assertDoesNotThrow(()->listener.beforeWrite(new ArrayList<>()));
+        Assertions.assertDoesNotThrow(()->listener.beforeWrite(new Chunk<>(new ArrayList<>())));
     }
 
     @Test
     public void afterWrite_processData_notThrowError(){
 
-        Assertions.assertDoesNotThrow(()->listener.afterWrite(new ArrayList<>()));
+        Assertions.assertDoesNotThrow(()->listener.afterWrite(new Chunk<>(new ArrayList<>())));
     }
 
     @Test
@@ -81,7 +84,7 @@ public class BatchStepListenerTest {
     @Test
     public void onWriteError_processData_notThrowError(){
 
-        Assertions.assertDoesNotThrow(()->listener.onWriteError(new NullPointerException(),new ArrayList<>()));
+        Assertions.assertDoesNotThrow(()->listener.onWriteError(new NullPointerException(),new Chunk<>(new ArrayList<>())));
     }
 
     @Test

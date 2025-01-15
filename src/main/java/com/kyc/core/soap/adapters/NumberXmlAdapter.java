@@ -3,7 +3,7 @@ package com.kyc.core.soap.adapters;
 import com.kyc.core.util.GeneralUtil;
 import lombok.RequiredArgsConstructor;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.Objects;
 
 @RequiredArgsConstructor

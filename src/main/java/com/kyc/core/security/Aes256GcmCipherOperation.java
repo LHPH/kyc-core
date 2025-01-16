@@ -12,6 +12,7 @@ import javax.crypto.spec.GCMParameterSpec;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
+import java.security.ProviderException;
 import java.security.spec.AlgorithmParameterSpec;
 import java.util.Base64;
 
@@ -53,7 +54,7 @@ public class Aes256GcmCipherOperation implements CipherOperation<SecretKey,Secre
 
            return cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
        }
-       catch(GeneralSecurityException ex){
+       catch(GeneralSecurityException | ProviderException ex){
 
            throw KycException.builder()
                    .errorData(new MessageData())
@@ -80,7 +81,7 @@ public class Aes256GcmCipherOperation implements CipherOperation<SecretKey,Secre
 
             return cipher.doFinal(encryptedText);
         }
-        catch(GeneralSecurityException ex){
+        catch(GeneralSecurityException | ProviderException ex){
 
             throw KycException.builder()
                     .errorData(new MessageData())

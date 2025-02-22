@@ -1,6 +1,7 @@
 package com.kyc.core.model.notifications;
 
 import com.kyc.core.model.BaseModel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,11 +9,14 @@ import lombok.ToString;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class NotificationData extends BaseModel {
 
@@ -24,5 +28,5 @@ public class NotificationData extends BaseModel {
     @Pattern(regexp = "^[A-Z\\s\\d]{1,15}",message = "Invalid format")
     private String event;
 
-    private Date date;
+    private LocalDateTime date = LocalDateTime.now();
 }

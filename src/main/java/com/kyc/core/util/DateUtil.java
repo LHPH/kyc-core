@@ -137,6 +137,43 @@ public final class DateUtil {
         return Date.from(date.atZone(ZoneId.of("UTC-6")).toInstant());
     }
 
+    public static Date millisToDate(Long milliseconds){
+        if(milliseconds!=null){
+            return new Date(milliseconds);
+        }
+        return null;
+    }
+
+    public static Long dateToMilliseconds(Date date){
+
+        if(date!=null){
+            return date.getTime();
+        }
+        return null;
+    }
+
+    public static Instant millisecondsToInstant(Long milliseconds){
+
+        if(milliseconds!=null){
+            return Instant.ofEpochMilli(milliseconds);
+        }
+        return null;
+    }
+
+    public static Long instantToMilliseconds(Instant instant){
+
+        if(instant!=null){
+            return instant.toEpochMilli();
+        }
+        return null;
+    }
+
+    public static Instant dateToInstant(Date date){
+
+        LocalDateTime localDateTime = dateToLocalDateTime(date);
+        return localDateTimeToInstant(localDateTime);
+    }
+
     public static Instant localDateTimeToInstant(LocalDateTime date){
         return date.atZone(ZoneId.of("UTC-6")).toInstant();
     }

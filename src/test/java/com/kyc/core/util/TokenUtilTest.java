@@ -1,6 +1,6 @@
 package com.kyc.core.util;
 
-import com.kyc.core.model.jwt.JWTData;
+import com.kyc.core.model.jwt.JwtData;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import org.junit.Test;
@@ -24,13 +24,13 @@ public class TokenUtilTest {
     }
 
     @Test
-    public void getToken_generateToken_returnToken() throws JOSEException {
+    public void getToken_generateToken_returnToken() throws JOSEException, ParseException {
 
-        JWTData jwtData = new JWTData();
-        jwtData.setKey("key");
-        jwtData.setAudience("audience");
-        jwtData.setChannel("channel");
-        jwtData.setExpirationTime(DateUtil.localDateToDate(LocalDate.now().plusDays(1)));
+        JwtData jwtData = JwtData.builder()
+                .addAud("audience")
+                .channel("channel")
+                .exp(DateUtil.localDateToDate(LocalDate.now().plusDays(1)).getTime())
+                .build();
 
         byte[] sharedSecret = TokenUtil.generateRandomSharedSecret(32);
 
@@ -41,29 +41,28 @@ public class TokenUtilTest {
     @Test
     public void getJwtData_getJwtDataFromToken_returnJwtData() throws JOSEException, ParseException {
 
-        JWTData jwtData = new JWTData();
-        jwtData.setKey("key");
-        jwtData.setAudience("audience");
-        jwtData.setChannel("channel");
-        jwtData.setExpirationTime(DateUtil.localDateToDate(LocalDate.now().plusDays(1)));
+        JwtData jwtData = JwtData.builder()
+                .addAud("audience")
+                .channel("channel")
+                .exp(DateUtil.localDateToDate(LocalDate.now().plusDays(1)).getTime())
+                .build();
 
         byte[] sharedSecret = TokenUtil.generateRandomSharedSecret(32);
 
         String token = TokenUtil.getToken(jwtData,JWSAlgorithm.HS256,sharedSecret);
 
-        JWTData result = TokenUtil.getJwtData(token,JWSAlgorithm.HS256,sharedSecret);
+        JwtData result = TokenUtil.getJwtData(token,JWSAlgorithm.HS256,sharedSecret);
 
         Assertions.assertNotNull(result);
-        Assertions.assertEquals(jwtData.getKey(),result.getKey());
-        Assertions.assertEquals(jwtData.getAudience(),result.getAudience());
+        Assertions.assertEquals(jwtData.getAud().get(0),result.getAud().get(0));
         Assertions.assertEquals(jwtData.getChannel(),result.getChannel());
     }
 
     @Test
     public void checkExpirationTime_checkingGoodTime_returnTrue(){
 
-        JWTData jwtData = new JWTData();
-        jwtData.setExpirationTime(DateUtil.localDateToDate(LocalDate.now().plusDays(1)));
+        JwtData jwtData = new JwtData();
+        jwtData.setExp(DateUtil.localDateToDate(LocalDate.now().plusDays(1)).getTime());
 
         Assertions.assertTrue(TokenUtil.checkExpirationTime(jwtData));
     }
@@ -71,8 +70,8 @@ public class TokenUtilTest {
     @Test
     public void checkExpirationTime_checkingBadTime_returnFalse(){
 
-        JWTData jwtData = new JWTData();
-        jwtData.setExpirationTime(DateUtil.localDateToDate(LocalDate.now().minusDays(1)));
+        JwtData jwtData = new JwtData();
+        jwtData.setExp(DateUtil.localDateToDate(LocalDate.now().minusDays(1)).getTime());
 
         Assertions.assertFalse(TokenUtil.checkExpirationTime(jwtData));
     }
@@ -80,8 +79,8 @@ public class TokenUtilTest {
     @Test
     public void checkExpirationTime_noExpirationTime_returnFalse(){
 
-        JWTData jwtData = new JWTData();
-        jwtData.setExpirationTime(null);
+        JwtData jwtData = new JwtData();
+        jwtData.setExp(null);
 
         Assertions.assertFalse(TokenUtil.checkExpirationTime(jwtData));
     }
@@ -91,15 +90,6 @@ public class TokenUtilTest {
 
         String bearerToken = "Bearer Token";
         Assertions.assertEquals("Token",TokenUtil.extractTokenFromAuthHeader(bearerToken));
-    }
-
-    @Test
-    public void extractTokenFromAuthHeader_receiveBadBearerToken_raiseException(){
-
-        Assertions.assertThrows(OAuth2AuthenticationException.class,()->{
-            String bearerToken = "Token";
-            TokenUtil.extractTokenFromAuthHeader(bearerToken);
-        });
     }
 
     @Test

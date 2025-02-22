@@ -1,5 +1,6 @@
 package com.kyc.core.util;
 
+import com.kyc.core.model.jwt.JwtData;
 import com.kyc.core.model.web.ResponseData;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
@@ -53,6 +54,22 @@ public final class TestsUtil {
             return null;
         }
         return list;
+    }
+
+    public static JwtData getJwtData(){
+
+        return JwtData.builder()
+                .channel("ONLINE")
+                .owner(1L)
+                .role("CUSTOMER")
+                .exp(System.currentTimeMillis()+50000)
+                .iat(System.currentTimeMillis())
+                .sub("SUB")
+                .addAud("http://localhost:9000")
+                .header("alg","HMAC256")
+                .addition("claim","value")
+                .user(1L)
+                .build();
     }
 
     private TestsUtil(){}

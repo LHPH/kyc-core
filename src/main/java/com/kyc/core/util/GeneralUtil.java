@@ -109,6 +109,10 @@ public final class GeneralUtil {
         return null;
     }
 
+    public static <T extends Number> T convertOrNull(Object value, Class<T> type){
+       return convertOrNull(Objects.toString(value,null),type);
+    }
+
     public static void paramNotNull(String nameParam,Object valueParam){
         if(valueParam==null){
             throw new IllegalArgumentException(nameParam+"must not be null");

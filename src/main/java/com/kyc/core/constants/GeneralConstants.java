@@ -18,5 +18,8 @@ public final class GeneralConstants {
     public static final String EXC_HTTP_SOAP_FAULT_CODE_LABEL = "Fault Code: ";
 
     public static final String CORRELATION_ID_HEADER = "kyc-correlation-id";
+    public static final String ID_RECIPIENT = "id-recipient";
+    public static final String ID_ISSUER = "id-issuer";
+    public static final String CHANNEL = "channel";
     private GeneralConstants(){}
 }

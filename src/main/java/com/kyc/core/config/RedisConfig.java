@@ -1,5 +1,6 @@
 package com.kyc.core.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -33,17 +34,22 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisTemplate<String, ?> redisTemplate(){
+    public RedisTemplate<String, ?> redisTemplate(ObjectMapper objectMapper){
 
         RedisTemplate<String,Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(jedisConnectionFactory());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+        redisTemplate.setHashValueSerializer(genericJackson2JsonRedisSerializer(objectMapper));
+        redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer(objectMapper));
         redisTemplate.setEnableTransactionSupport(true);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
+    }
+
+    @Bean
+    public GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer(ObjectMapper objectMapper){
+        return new GenericJackson2JsonRedisSerializer(objectMapper);
     }
 
 

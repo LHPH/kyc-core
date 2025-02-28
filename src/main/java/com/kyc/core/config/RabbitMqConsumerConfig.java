@@ -1,5 +1,6 @@
 package com.kyc.core.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -41,8 +42,9 @@ public class RabbitMqConsumerConfig implements RabbitListenerConfigurer {
     private LocalValidatorFactoryBean validator;
 
     @Bean
-    public Jackson2JsonMessageConverter jsonMessageConverter() {
-        return new Jackson2JsonMessageConverter();
+    public Jackson2JsonMessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
+
+        return new Jackson2JsonMessageConverter(objectMapper);
     }
 
     @Bean
@@ -57,9 +59,10 @@ public class RabbitMqConsumerConfig implements RabbitListenerConfigurer {
 
     @Bean(name = "rabbitListenerContainerFactory")
     public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(SimpleRabbitListenerContainerFactoryConfigurer configurer,
-                                                                                     ConnectionFactory connectionFactory){
+                                                                                     ConnectionFactory connectionFactory,
+                                                                                     ObjectMapper objectMapper){
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setMessageConverter(jsonMessageConverter());
+        factory.setMessageConverter(jsonMessageConverter(objectMapper));
         factory.setConsumerTagStrategy(q -> applicationName+"."+q);
 
         //factory.setAfterReceivePostProcessors();

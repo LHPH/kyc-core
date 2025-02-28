@@ -21,7 +21,7 @@ import java.util.Date;
 public class NotificationData extends BaseModel {
 
     @NotNull
-    @Pattern(regexp = "^[A-Z\\s\\d]{1,50}",message = "Invalid format")
+    @Pattern(regexp = "^[A-Za-z\\s\\d]{1,50}",message = "Invalid format")
     private String message;
 
     @NotNull

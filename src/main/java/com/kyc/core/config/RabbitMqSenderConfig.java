@@ -1,5 +1,6 @@
 package com.kyc.core.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionNameStrategy;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -39,9 +40,11 @@ public class RabbitMqSenderConfig {
     }
 
     @Bean
-    public MessageConverter jsonMessageConverter(){
-        return new Jackson2JsonMessageConverter();
+    public Jackson2JsonMessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
+
+        return new Jackson2JsonMessageConverter(objectMapper);
     }
+
 
     @Bean
     public ConnectionNameStrategy defineConnectionNameStrategy() {
@@ -49,10 +52,10 @@ public class RabbitMqSenderConfig {
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(CachingConnectionFactory connectionFactory){
+    public RabbitTemplate rabbitTemplate(CachingConnectionFactory connectionFactory,ObjectMapper objectMapper){
 
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(jsonMessageConverter());
+        rabbitTemplate.setMessageConverter(jsonMessageConverter(objectMapper));
         rabbitTemplate.setReceiveTimeout(30000);
         rabbitTemplate.setReplyTimeout(30000);
         return rabbitTemplate;

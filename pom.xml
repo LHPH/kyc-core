@@ -14,13 +14,13 @@
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
       <maven.compiler.source>17</maven.compiler.source>
       <maven.compiler.target>17</maven.compiler.target>
-      <spring.version>6.1.10</spring.version>
-      <spring.data-release.version>2024.0.1</spring.data-release.version>
-      <spring.security.version>6.3.1</spring.security.version>
-      <spring.boot.version>3.3.1</spring.boot.version>
-      <spring.batch.version>5.1.2</spring.batch.version>
+      <spring.version>6.2.3</spring.version>
+      <spring.data-release.version>2024.1.3</spring.data-release.version>
+      <spring.security.version>6.4.3</spring.security.version>
+      <spring.boot.version>3.4.3</spring.boot.version>
+      <spring.batch.version>5.2.1</spring.batch.version>
       <spring.ws.version>4.0.11</spring.ws.version>
-      <spring-cloud.version>2023.0.2</spring-cloud.version>
+      <spring-cloud.version>2024.0.0</spring-cloud.version>
       <openhtml.version>1.0.10</openhtml.version>
   </properties>
 
@@ -145,7 +145,7 @@
     <dependency>
       <groupId>redis.clients</groupId>
       <artifactId>jedis</artifactId>
-      <version>5.0.2</version>
+      <version>5.2.0</version>
       <scope>provided</scope>
     </dependency>
 
@@ -232,7 +232,7 @@
     <dependency>
       <groupId>com.graphql-java</groupId>
       <artifactId>graphql-java</artifactId>
-      <version>22.1</version>
+      <version>22.3</version>
       <scope>provided</scope>
     </dependency>
 
@@ -283,14 +283,14 @@
     <dependency>
       <groupId>io.projectreactor</groupId>
       <artifactId>reactor-core</artifactId>
-      <version>3.6.7</version>
+      <version>3.7.3</version>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>io.projectreactor</groupId>
       <artifactId>reactor-test</artifactId>
-      <version>3.6.7</version>
+      <version>3.7.3</version>
       <scope>test</scope>
     </dependency>
 

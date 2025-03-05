@@ -10,10 +10,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.jwt.Jwt;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -65,10 +68,27 @@ public final class TestsUtil {
                 .exp(System.currentTimeMillis()+50000)
                 .iat(System.currentTimeMillis())
                 .sub("SUB")
+                .iss("ISSUER")
                 .addAud("http://localhost:9000")
                 .header("alg","HMAC256")
                 .addition("claim","value")
                 .user(1L)
+                .build();
+    }
+
+    public static Jwt getJwt(){
+
+        return Jwt.withTokenValue("test")
+                .header("alg","HMAC256")
+                .issuedAt(Instant.now())
+                .expiresAt(Instant.now().plusMillis(5000))
+                .issuer("ISSUER")
+                .audience(Collections.singletonList("http://localhost:9000"))
+                .claim("claim","value")
+                .claim("channel","ONLINE")
+                .claim("role","CUSTOMER")
+                .claim("user","1")
+                .subject("SUB")
                 .build();
     }
 

@@ -1,51 +1,51 @@
 package com.kyc.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.kyc.core.enums.MessageType;
-import io.github.threetenjaxb.core.InstantXmlAdapter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
-import jakarta.xml.bind.annotation.XmlSchemaType;
-import jakarta.xml.bind.annotation.XmlType;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.Instant;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-        "code",
-        "message",
-        "type",
-        "time"
-})
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@XmlRootElement(name = "error")
 public class MessageData extends BaseModel {
 
     @JsonProperty("code")
-    @XmlElement(name = "code", required = true)
     private String code;
 
     @JsonProperty("message")
-    @XmlElement(name = "message", required = true)
     private String message;
 
     @JsonProperty("type")
-    @XmlElement(name = "type", required = true)
     private MessageType type;
 
     @JsonProperty("time")
-    @XmlElement(name = "time", required = true)
-    @XmlJavaTypeAdapter(InstantXmlAdapter.class)
-    @XmlSchemaType(name = "dateTime")
-    private final Instant time = Instant.now();
+    private Instant time = Instant.now();
+
+    @JsonIgnore
+    private String hint;
+
+    public MessageData(String code, String message, MessageType type) {
+
+        this.code = code;
+        this.message = message;
+        this.type = type;
+    }
+
+    public MessageData(MessageData messageData){
+
+        this.code = messageData.getCode();
+        this.message = messageData.getMessage();
+        this.type = messageData.getType();
+        this.time = messageData.getTime();
+        this.hint = messageData.getHint();
+    }
 
     public static MessageData copy(MessageData original){
 
@@ -53,6 +53,7 @@ public class MessageData extends BaseModel {
         messageData.setCode(original.code);
         messageData.setMessage(original.message);
         messageData.setType(original.type);
+        messageData.setHint(original.hint);
 
         return messageData;
     }

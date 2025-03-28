@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 import static com.kyc.core.constants.TokenConstants.JWT_CLAIM_CHANNEL;
 import static com.kyc.core.constants.TokenConstants.JWT_CLAIM_OWNER;
 import static com.kyc.core.constants.TokenConstants.JWT_CLAIM_ROLE;
+import static com.kyc.core.constants.TokenConstants.JWT_CLAIM_SCOPE;
 import static com.kyc.core.constants.TokenConstants.JWT_CLAIM_USER;
 import static com.kyc.core.util.DateUtil.dateToMilliseconds;
 import static com.kyc.core.util.DateUtil.instantToMilliseconds;
@@ -49,6 +50,7 @@ public final class TokenUtil {
         aux.add(JWT_CLAIM_USER);
         aux.add(JWT_CLAIM_CHANNEL);
         aux.add(JWT_CLAIM_ROLE);
+        aux.add(JWT_CLAIM_SCOPE);
         aux.addAll(JWTClaimsSet.getRegisteredNames());
 
         DUPLICATE_CLAIMS = Collections.unmodifiableSet(aux);
@@ -80,6 +82,7 @@ public final class TokenUtil {
                 .claim(JWT_CLAIM_USER,data.getUser())
                 .claim(JWT_CLAIM_CHANNEL,data.getChannel())
                 .claim(JWT_CLAIM_ROLE,data.getRole())
+                .claim(JWT_CLAIM_SCOPE,ObjectUtils.defaultIfNull(data.getScope(),data.getRole()))
                 .subject(data.getSub())
                 .issuer(data.getIss())
                 .audience(data.getAud())
@@ -120,6 +123,8 @@ public final class TokenUtil {
                     .user(convertOrNull(claimsSet.getClaim(JWT_CLAIM_USER),Long.class))
                     .channel(Objects.toString(claimsSet.getClaim(JWT_CLAIM_CHANNEL),null))
                     .role(Objects.toString(claimsSet.getClaim(JWT_CLAIM_ROLE),null))
+                    .scope(Objects.toString(ObjectUtils.defaultIfNull(claimsSet.getClaim(JWT_CLAIM_SCOPE)
+                            ,claimsSet.getClaim(JWT_CLAIM_ROLE)),null))
                     .sub(claimsSet.getSubject())
                     .aud(claimsSet.getAudience())
                     .iss(claimsSet.getIssuer())
@@ -146,6 +151,7 @@ public final class TokenUtil {
                     c.put(JWT_CLAIM_USER,jwtData.getUser());
                     c.put(JWT_CLAIM_CHANNEL,jwtData.getChannel());
                     c.put(JWT_CLAIM_ROLE,jwtData.getRole());
+                    c.put(JWT_CLAIM_SCOPE,ObjectUtils.defaultIfNull(jwtData.getScope(),jwtData.getRole()));
                     c.putAll(jwtData.getAdditions());
                 })
                 .headers(h -> h.putAll(jwtData.getHeaders()))
@@ -165,6 +171,7 @@ public final class TokenUtil {
                 .user(jwt.getClaim(JWT_CLAIM_USER))
                 .channel(jwt.getClaim(JWT_CLAIM_CHANNEL))
                 .role(jwt.getClaim(JWT_CLAIM_ROLE))
+                .scope(ObjectUtils.defaultIfNull(jwt.getClaim(JWT_CLAIM_SCOPE),jwt.getClaim(JWT_CLAIM_ROLE)))
                 .sub(jwt.getSubject())
                 .aud(jwt.getAudience())
                 .iss(jwt.getIssuer().toString())

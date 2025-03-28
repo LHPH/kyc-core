@@ -78,17 +78,24 @@ public final class TestsUtil {
 
     public static Jwt getJwt(){
 
+        return getJwt("SUB",1L,1L,"CUSTOMER");
+    }
+
+    public static Jwt getJwt(String sub, Object user,Object owner, String role){
+
         return Jwt.withTokenValue("test")
                 .header("alg","HMAC256")
                 .issuedAt(Instant.now())
-                .expiresAt(Instant.now().plusMillis(5000))
-                .issuer("ISSUER")
+                .expiresAt(Instant.now().plusMillis(30000))
+                .issuer("http://localhost:9000")
                 .audience(Collections.singletonList("http://localhost:9000"))
                 .claim("claim","value")
                 .claim("channel","ONLINE")
-                .claim("role","CUSTOMER")
-                .claim("user","1")
-                .subject("SUB")
+                .claim("role",role)
+                .claim("owner",owner)
+                .claim("user",user)
+                .claim("scp",role)
+                .subject(sub)
                 .build();
     }
 

@@ -21,5 +21,7 @@ public final class GeneralConstants {
     public static final String ID_RECIPIENT = "id-recipient";
     public static final String ID_ISSUER = "id-issuer";
     public static final String CHANNEL = "channel";
+    public static final String PARAM_ID = "id";
+    public static final String PARAM_PAGE = "page";
     private GeneralConstants(){}
 }

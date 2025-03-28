@@ -24,6 +24,7 @@ public class JwtData extends BaseModel {
     private Long user;
     private String channel;
     private String role;
+    private String scope;
 
     private String sub;
     private String iss;

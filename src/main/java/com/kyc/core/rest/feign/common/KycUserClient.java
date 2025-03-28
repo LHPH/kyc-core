@@ -2,7 +2,6 @@ package com.kyc.core.rest.feign.common;
 
 
 import com.kyc.core.model.jwt.JwtData;
-import com.kyc.core.model.jwt.TokenMetaData;
 import com.kyc.core.model.web.ResponseData;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

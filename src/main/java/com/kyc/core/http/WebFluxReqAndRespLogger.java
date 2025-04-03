@@ -39,6 +39,7 @@ public class WebFluxReqAndRespLogger {
         long length = httpHeaders.getContentLength();
 
         LOGGER.info("Request Start: {}",startTime);
+        LOGGER.info("Request To: {}",requestURI);
         LOGGER.info("Request Scheme:{}, Path:{}", scheme, requestURI.getPath());
         LOGGER.info("Request Method:{}, IP:{}, Host:{}", request.getMethod(), request.getRemoteAddress(), requestURI.getHost());
         LOGGER.info("Request ContentType:{}, Content Length:{}", contentType, length);

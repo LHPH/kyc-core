@@ -17,4 +17,15 @@ public class RequestData<T> extends BaseModel {
     private Map<String,Object> headers;
     private T body;
     private JwtData auth;
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("pathParams=").append(pathParams);
+        sb.append(", queryParams=").append(queryParams);
+        sb.append(", headers=").append(headers);
+        sb.append(", body=").append(body);
+        sb.append('}');
+        return sb.toString();
+    }
 }

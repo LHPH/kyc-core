@@ -92,5 +92,16 @@ public class ResponseData<T> {
                 .headers(getHttpHeaders())
                 .build();
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("{");
+        sb.append("data=").append(data);
+        sb.append(", httpStatus=").append(httpStatus);
+        sb.append(", httpHeaders=").append(httpHeaders);
+        sb.append(", error=").append(error);
+        sb.append('}');
+        return sb.toString();
+    }
 }
 

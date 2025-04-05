@@ -1,5 +1,6 @@
 package com.kyc.core.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.info.InfoContributor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.info.BuildProperties;
@@ -20,6 +21,9 @@ public class BuildDetailConfig {
 
     private LocalDateTime startUp;
 
+    @Value("${instance:}")
+    private String instance;
+
     @PostConstruct
     public void init(){
         startUp = LocalDateTime.now();
@@ -33,7 +37,9 @@ public class BuildDetailConfig {
                 info.withDetail("name", buildProperties.getName())
                         .withDetail("version", buildProperties.getVersion())
                         .withDetail("created",LocalDateTime.ofInstant(buildProperties.getTime(),ZoneId.of("UTC-6")))
+                        .withDetail("deployed",startUp.atZone(ZoneId.of("UTC-6")))
                         .withDetail("running",getTimeRunning(startUp.atZone(ZoneId.of("UTC-6")).toInstant()))
+                        .withDetail("instance",instance)
                         .build();
     }
 

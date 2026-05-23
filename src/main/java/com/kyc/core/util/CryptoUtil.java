@@ -9,16 +9,17 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.security.UnrecoverableEntryException;
-import java.security.UnrecoverableKeyException;
+import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
@@ -38,6 +39,17 @@ public class CryptoUtil {
             return keyGenerator.generateKey();
         }
         catch(NoSuchAlgorithmException ex){
+            return null;
+        }
+    }
+
+    public static KeyPair getKeyPair(int keySize){
+        try {
+            KeyPairGenerator keyGenerator= KeyPairGenerator.getInstance("RSA");
+            keyGenerator.initialize(keySize);
+            return keyGenerator.generateKeyPair();
+        }
+        catch (NoSuchAlgorithmException ex){
             return null;
         }
     }
@@ -74,6 +86,30 @@ public class CryptoUtil {
 
             Key key = keyStore.getKey(keyName,keySecret.toCharArray());
             return new SecretKeySpec(key.getEncoded(),"AES");
+        }
+    }
+
+    public static KeyPair loadRsaKeysFromKeystore(Resource resource,
+                                                              String secret,
+                                                              String keyName,
+                                                              String keySecret,
+                                                              String type) throws IOException, KeyStoreException, UnrecoverableEntryException, CertificateException, NoSuchAlgorithmException {
+
+        try(InputStream in = resource.getInputStream()){
+
+            KeyStore keyStore = KeyStore.getInstance(type);
+            keyStore.load(in,secret.toCharArray());
+
+            if(!keyStore.containsAlias(keyName)){
+                throw new UnrecoverableEntryException("No key with name "+keyName);
+            }
+
+            PrivateKey privateKey =(PrivateKey) keyStore.getKey(keyName,keySecret.toCharArray());
+
+            Certificate cert = keyStore.getCertificate(keyName);
+            PublicKey publicKey = cert.getPublicKey();
+
+            return new KeyPair(publicKey,privateKey);
         }
     }
 }

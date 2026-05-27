@@ -7,22 +7,26 @@ import lombok.Getter;
 import org.springframework.util.Assert;
 
 import javax.crypto.Cipher;
+import javax.crypto.spec.OAEPParameterSpec;
+import javax.crypto.spec.PSource;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.MGF1ParameterSpec;
 import java.util.Base64;
 import java.util.Objects;
 
 @Getter
 public class RsaCipherOperation implements CipherOperation<PublicKey,PrivateKey> {
 
-    private static final String ENCRYPT_ALG = "RSA";
+    private static final String ENCRYPT_ALG = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding";
     private static final int RSA_KEY_BIT = 2048;
 
     private final PrivateKey privateKey;
     private final PublicKey publicKey;
+    private final OAEPParameterSpec oaepParams;
 
     public RsaCipherOperation(){
         this(Objects.requireNonNull(CryptoUtil.getKeyPair(RSA_KEY_BIT)));
@@ -37,6 +41,13 @@ public class RsaCipherOperation implements CipherOperation<PublicKey,PrivateKey>
         Assert.notNull(publicKey, "Public key must not be null");
         this.privateKey = privateKey;
         this.publicKey = publicKey;
+
+         this.oaepParams = new OAEPParameterSpec(
+                "SHA-256",
+                "MGF1",
+                new MGF1ParameterSpec("SHA-256"), // Explicitly set MGF1 to SHA-256
+                PSource.PSpecified.DEFAULT
+        );
     }
 
     @Override
@@ -45,7 +56,7 @@ public class RsaCipherOperation implements CipherOperation<PublicKey,PrivateKey>
         try{
             Cipher cipher = Cipher.getInstance(ENCRYPT_ALG);
 
-            cipher.init(Cipher.ENCRYPT_MODE,publicKey);
+            cipher.init(Cipher.ENCRYPT_MODE,publicKey,this.oaepParams);
 
             byte [] encryptedText = cipher.doFinal(plainText.getBytes(StandardCharsets.UTF_8));
             return Base64.getEncoder().encodeToString(encryptedText);
@@ -63,7 +74,7 @@ public class RsaCipherOperation implements CipherOperation<PublicKey,PrivateKey>
 
         try{
             Cipher cipher = Cipher.getInstance(ENCRYPT_ALG);
-            cipher.init(Cipher.DECRYPT_MODE,privateKey);
+            cipher.init(Cipher.DECRYPT_MODE,privateKey,this.oaepParams);
 
             byte[] bytesEncryptedText = Base64.getDecoder().decode(encryptedText);
             byte[] plainText = cipher.doFinal(bytesEncryptedText);

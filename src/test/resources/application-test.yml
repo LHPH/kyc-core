@@ -5,3 +5,20 @@ kyc-messages:
         code: CODE
         message: MESSAGE
         type: INFO
+
+kyc-config:
+  encryption:
+    aes:
+      enabled: true
+      key-store: classpath:keystore.p12
+      key-alias: aes-key
+      key-password: test123
+      key-store-type: PKCS12
+      key-store-password: test123
+    rsa:
+      enabled: true
+      key-store: classpath:keystore.p12
+      key-alias: rsa-key
+      key-password: test123
+      key-store-type: PKCS12
+      key-store-password: test123

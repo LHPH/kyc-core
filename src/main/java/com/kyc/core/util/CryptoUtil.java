@@ -1,5 +1,6 @@
 package com.kyc.core.util;
 
+import com.kyc.core.security.Aes256GcmCipherOperation;
 import org.springframework.core.io.Resource;
 
 import javax.crypto.KeyGenerator;
@@ -23,6 +24,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
+import java.util.Base64;
 
 public class CryptoUtil {
 
@@ -41,6 +43,12 @@ public class CryptoUtil {
         catch(NoSuchAlgorithmException ex){
             return null;
         }
+    }
+
+    public static SecretKey transformAesKey(String aesKey){
+
+        byte [] key = Base64.getDecoder().decode(aesKey);
+        return new SecretKeySpec(key, Aes256GcmCipherOperation.ENCRYPT_ALG);
     }
 
     public static KeyPair getKeyPair(int keySize){

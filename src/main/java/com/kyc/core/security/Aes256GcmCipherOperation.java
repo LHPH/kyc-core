@@ -3,8 +3,6 @@ package com.kyc.core.security;
 import com.kyc.core.exception.KycException;
 import com.kyc.core.model.MessageData;
 import com.kyc.core.util.CryptoUtil;
-import org.springframework.core.io.Resource;
-import org.springframework.util.Assert;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -13,25 +11,14 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.ProviderException;
-import java.security.spec.AlgorithmParameterSpec;
 import java.util.Base64;
 
 public class Aes256GcmCipherOperation implements CipherOperation<SecretKey,SecretKey> {
 
-    private static final String ENCRYPT_ALG = "AES/GCM/NoPadding";
-    private static final int TAG_LENGTH_BIT = 128;
-    private static final int IV_LENGTH_BYTE = 16;
-    private static final int AES_KEY_BIT = 256;
-
-    private final SecretKey secretKey;
-
-    public Aes256GcmCipherOperation(){
-        this(CryptoUtil.getAesKey(AES_KEY_BIT));
-    }
-
-    public Aes256GcmCipherOperation(SecretKey secretKey){
-        this.secretKey = secretKey;
-    }
+    public static final String ENCRYPT_ALG = "AES/GCM/NoPadding";
+    public static final int TAG_LENGTH_BIT = 128;
+    public static final int IV_LENGTH_BYTE = 16;
+    public static final int AES_KEY_BIT = 256;
 
     @Override
     public String encrypt(String plainText, SecretKey key) {
@@ -100,17 +87,5 @@ public class Aes256GcmCipherOperation implements CipherOperation<SecretKey,Secre
         bb.get(cipherText);
 
         return decrypt(cipherText, key, iv);
-    }
-
-    @Override
-    public String encrypt(String plainText){
-        Assert.notNull(this.secretKey,"SecretKey must not be null");
-        return encrypt(plainText,this.secretKey);
-    }
-
-    @Override
-    public String decrypt(String plainText){
-        Assert.notNull(this.secretKey,"SecretKey must not be null");
-        return decrypt(plainText,this.secretKey);
     }
 }

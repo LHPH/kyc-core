@@ -48,7 +48,7 @@ public class CryptoUtil {
     public static SecretKey transformAesKey(String aesKey){
 
         byte [] key = Base64.getDecoder().decode(aesKey);
-        return new SecretKeySpec(key, Aes256GcmCipherOperation.ENCRYPT_ALG);
+        return new SecretKeySpec(key, "AES");
     }
 
     public static KeyPair getKeyPair(int keySize){

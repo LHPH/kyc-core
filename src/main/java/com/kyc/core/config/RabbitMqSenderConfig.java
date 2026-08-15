@@ -1,14 +1,14 @@
 package com.kyc.core.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionNameStrategy;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tools.jackson.databind.json.JsonMapper;
 
 @Configuration
 public class RabbitMqSenderConfig {
@@ -40,9 +40,8 @@ public class RabbitMqSenderConfig {
     }
 
     @Bean
-    public Jackson2JsonMessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
-
-        return new Jackson2JsonMessageConverter(objectMapper);
+    public MessageConverter jsonMessageConverter(JsonMapper jsonMapper) {
+        return new JacksonJsonMessageConverter(jsonMapper);
     }
 
 
@@ -52,10 +51,10 @@ public class RabbitMqSenderConfig {
     }
 
     @Bean
-    public RabbitTemplate rabbitTemplate(CachingConnectionFactory connectionFactory,ObjectMapper objectMapper){
+    public RabbitTemplate rabbitTemplate(CachingConnectionFactory connectionFactory,JsonMapper jsonMapper){
 
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setMessageConverter(jsonMessageConverter(objectMapper));
+        rabbitTemplate.setMessageConverter(jsonMessageConverter(jsonMapper));
         rabbitTemplate.setReceiveTimeout(30000);
         rabbitTemplate.setReplyTimeout(30000);
         return rabbitTemplate;

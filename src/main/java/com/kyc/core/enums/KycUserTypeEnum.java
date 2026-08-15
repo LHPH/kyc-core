@@ -4,7 +4,6 @@ package com.kyc.core.enums;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.apache.commons.lang3.ObjectUtils;
 
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)

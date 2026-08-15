@@ -3,13 +3,14 @@ package com.kyc.core.batch.tasklets;
 import com.kyc.core.enums.MessageType;
 import com.kyc.core.exception.KycBatchException;
 import com.kyc.core.model.MessageData;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;
-import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.StepContribution;
 import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.batch.infrastructure.repeat.RepeatStatus;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
@@ -28,6 +29,7 @@ public class CleanFilesTasklet implements Tasklet {
     public CleanFilesTasklet(String stepName, String path){
         this(stepName,path,true,new MessageData("ERROR","ERROR", MessageType.ERROR));
     }
+
     public CleanFilesTasklet(String stepName,String path, boolean silentIfError, MessageData messageData){
 
         this.resource = new FileSystemResource(path);
@@ -37,7 +39,7 @@ public class CleanFilesTasklet implements Tasklet {
     }
 
     @Override
-    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) {
+    public @Nullable RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) {
 
         try{
             if(resource.exists()){

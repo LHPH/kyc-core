@@ -2,8 +2,8 @@ package com.kyc.core.batch;
 
 import com.kyc.core.exception.KycBatchException;
 import lombok.Setter;
-import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.validator.Validator;
+import org.springframework.batch.infrastructure.item.ItemProcessor;
+import org.springframework.batch.infrastructure.item.validator.Validator;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 

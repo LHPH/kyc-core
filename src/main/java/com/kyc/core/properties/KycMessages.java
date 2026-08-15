@@ -1,8 +1,8 @@
 package com.kyc.core.properties;
 
 import com.kyc.core.model.BaseModel;
-import com.kyc.core.model.properties.CatalogMessages;
 import com.kyc.core.model.MessageData;
+import com.kyc.core.model.properties.CatalogMessages;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;

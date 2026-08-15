@@ -4,9 +4,9 @@ import com.kyc.core.exception.KycBatchException;
 import com.kyc.core.model.MessageData;
 import lombok.AllArgsConstructor;
 import org.springframework.batch.core.ExitStatus;
-import org.springframework.batch.item.file.FlatFileParseException;
-import org.springframework.batch.repeat.RepeatContext;
-import org.springframework.batch.repeat.exception.ExceptionHandler;
+import org.springframework.batch.infrastructure.item.file.FlatFileParseException;
+import org.springframework.batch.infrastructure.repeat.RepeatContext;
+import org.springframework.batch.infrastructure.repeat.exception.ExceptionHandler;
 
 @AllArgsConstructor
 public class KycBatchExceptionHandler implements ExceptionHandler {
@@ -18,8 +18,7 @@ public class KycBatchExceptionHandler implements ExceptionHandler {
 
         Object inputData = null;
         Exception exc;
-        if (throwable instanceof FlatFileParseException) {
-            FlatFileParseException exception = (FlatFileParseException) throwable;
+        if (throwable instanceof FlatFileParseException exception) {
             inputData = exception.getInput();
             exc = exception;
         }

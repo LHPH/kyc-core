@@ -1,18 +1,19 @@
 package com.kyc.core.batch;
 
+import com.kyc.core.exception.KycBatchException;
+import com.kyc.core.model.MessageData;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.ExitStatus;
-import org.springframework.batch.core.StepExecution;
 import org.springframework.batch.core.listener.StepListenerSupport;
-import org.springframework.batch.item.Chunk;
+import org.springframework.batch.core.step.StepExecution;
+import org.springframework.batch.infrastructure.item.Chunk;
+import org.springframework.batch.infrastructure.item.file.FlatFileParseException;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,11 +22,17 @@ public class BatchStepListener<I,O> extends StepListenerSupport<I,O> {
     private static final Logger LOGGER = LoggerFactory.getLogger(BatchStepListener.class);
 
     private String stepName;
+    private MessageData messageData;
+    private boolean silentException;
+
+    public BatchStepListener(String stepName, MessageData messageData) {
+        this(stepName,messageData,false);
+    }
 
     @Override
     public ExitStatus afterStep(StepExecution stepExecution) {
 
-        stepName = ObjectUtils.defaultIfNull(stepName,stepExecution.getStepName());
+        stepName = ObjectUtils.getIfNull(stepName,stepExecution.getStepName());
         LocalDateTime startDate = stepExecution.getStartTime();
         LocalDateTime finishDate = stepExecution.getEndTime();
         ExitStatus exitStatus = stepExecution.getExitStatus();
@@ -43,7 +50,7 @@ public class BatchStepListener<I,O> extends StepListenerSupport<I,O> {
     @Override
     public void beforeStep(StepExecution stepExecution) {
 
-        stepName = ObjectUtils.defaultIfNull(stepName,stepExecution.getStepName());
+        stepName = ObjectUtils.getIfNull(stepName,stepExecution.getStepName());
         LOGGER.info("[{}] Starting step", stepName);
     }
 
@@ -73,9 +80,13 @@ public class BatchStepListener<I,O> extends StepListenerSupport<I,O> {
     }
 
     @Override
-    public void onWriteError(Exception exception, Chunk<? extends O> chunk) {
+    public void onWriteError(Exception ex, Chunk<? extends O> chunk) {
 
-        LOGGER.error("[{}] An error has occurred writing the elements", stepName,exception);
+        LOGGER.error("[{}] An error has occurred writing the elements", stepName,ex);
+
+        if(!silentException){
+            handleException(ex);
+        }
     }
 
     @Override
@@ -93,12 +104,42 @@ public class BatchStepListener<I,O> extends StepListenerSupport<I,O> {
     }
 
     @Override
-    public void onProcessError(I item, Exception e) {
-        LOGGER.error("[{}] An error has occurred processing the element {}", stepName,item,e);
+    public void onProcessError(I item, Exception ex) {
+        LOGGER.error("[{}] An error has occurred processing the element {}", stepName,item,ex);
+
+        if(!silentException){
+            handleException(ex);
+        }
     }
 
     @Override
     public void onReadError(Exception ex) {
         LOGGER.error("[{}] An error has occurred in reading {}", stepName,ex.getMessage());
+
+        if(!silentException){
+            handleException(ex);
+        }
+    }
+
+    protected void handleException(Exception ex){
+
+        Object inputData = null;
+        Exception exc;
+        if (ex instanceof FlatFileParseException exception) {
+            inputData = exception.getInput();
+            exc = exception;
+        }
+        else if(ex instanceof KycBatchException){
+            throw (KycBatchException)ex;
+        }
+        else{
+            exc = ex;
+        }
+        throw KycBatchException.builderBatchException()
+                .inputData(inputData)
+                .exception(exc)
+                .exitStatus(ExitStatus.FAILED)
+                .errorData(messageData)
+                .build();
     }
 }

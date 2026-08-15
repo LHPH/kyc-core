@@ -1,6 +1,5 @@
 package com.kyc.core.util;
 
-import com.kyc.core.security.Aes256GcmCipherOperation;
 import org.springframework.core.io.Resource;
 
 import javax.crypto.KeyGenerator;

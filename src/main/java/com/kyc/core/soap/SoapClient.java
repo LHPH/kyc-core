@@ -1,29 +1,17 @@
 package com.kyc.core.soap;
 
-import com.kyc.core.enums.MessageType;
-import com.kyc.core.exception.KycSoapException;
-import com.kyc.core.model.MessageData;
 import com.kyc.core.soap.model.RequestSoapData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.oxm.Marshaller;
-import org.springframework.oxm.Unmarshaller;
-import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.WebServiceMessage;
-import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.client.core.WebServiceMessageExtractor;
 import org.springframework.ws.client.core.WebServiceTemplate;
-import org.springframework.ws.soap.SoapFault;
-import org.springframework.ws.soap.client.SoapFaultClientException;
 import org.springframework.ws.support.MarshallingUtils;
 
-import javax.xml.transform.Result;
 import javax.xml.transform.TransformerException;
-
 import java.io.IOException;
 
-import static com.kyc.core.util.SoapUtil.getDetailContent;
 import static com.kyc.core.util.SoapUtil.throwExceptionIfFault;
 
 public class SoapClient<I,O> {

@@ -13,9 +13,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.net.URI;
-import java.util.Objects;
-
-import static com.kyc.core.constants.GeneralConstants.CORRELATION_ID_HEADER;
 
 //https://gist.github.com/matzegebbe/bf631b2d3ab6d55f58f4b6c1d3511189
 public class WebFluxReqAndRespLogger {

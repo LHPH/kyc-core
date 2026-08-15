@@ -1,11 +1,11 @@
 package com.kyc.core.services;
 
-import com.kyc.core.rest.feign.common.KycUserClient;
 import com.kyc.core.exception.KycRestException;
 import com.kyc.core.model.MessageData;
 import com.kyc.core.model.jwt.JwtData;
 import com.kyc.core.model.web.ResponseData;
 import com.kyc.core.properties.KycMessages;
+import com.kyc.core.rest.feign.common.KycUserClient;
 import com.kyc.core.security.jwt.KycUserTokenSessionService;
 import com.kyc.core.util.TokenUtil;
 import feign.FeignException;

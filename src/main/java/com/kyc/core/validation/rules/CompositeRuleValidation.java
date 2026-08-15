@@ -3,7 +3,6 @@ package com.kyc.core.validation.rules;
 import com.kyc.core.validation.model.InputData;
 import com.kyc.core.validation.model.ResultValidation;
 import com.kyc.core.validation.model.RuleValidation;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;

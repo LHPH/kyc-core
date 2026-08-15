@@ -1,6 +1,5 @@
 package com.kyc.core.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kyc.core.exception.handlers.KycRestAuthValidationExceptionHandler;
 import com.kyc.core.properties.KycMessages;
 import com.kyc.core.security.jwt.BearerTokenAuthenticationEntryPointDelegate;
@@ -25,6 +24,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.util.Collection;
 
@@ -33,7 +33,7 @@ import java.util.Collection;
 public class ResourceServerSecurityConfig {
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private JsonMapper jsonMapper;
 
     @Autowired
     private KycMessages kycMessages;
@@ -60,7 +60,7 @@ public class ResourceServerSecurityConfig {
     @Bean
     @ConditionalOnMissingBean
     public BearerTokenAuthenticationEntryPointDelegate bearerTokenAuthenticationEntryPointDelegate(){
-        return new BearerTokenAuthenticationEntryPointDelegate(kycMessages.getMessageByHint("AUTH"),objectMapper);
+        return new BearerTokenAuthenticationEntryPointDelegate(kycMessages.getMessageByHint("AUTH"),jsonMapper);
     }
 
     @Bean

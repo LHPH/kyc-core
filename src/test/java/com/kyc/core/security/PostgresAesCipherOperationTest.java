@@ -13,7 +13,6 @@ import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.crypto.SecretKey;
-
 import java.nio.charset.StandardCharsets;
 
 import static org.mockito.ArgumentMatchers.any;

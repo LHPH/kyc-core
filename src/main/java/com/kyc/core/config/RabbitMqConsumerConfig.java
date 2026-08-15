@@ -1,24 +1,20 @@
 package com.kyc.core.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-
-
-import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListenerConfigurer;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionNameStrategy;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.amqp.SimpleRabbitListenerContainerFactoryConfigurer;
+import org.springframework.boot.amqp.autoconfigure.SimpleRabbitListenerContainerFactoryConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import tools.jackson.databind.json.JsonMapper;
 
 @Configuration
 public class RabbitMqConsumerConfig implements RabbitListenerConfigurer {
@@ -42,9 +38,8 @@ public class RabbitMqConsumerConfig implements RabbitListenerConfigurer {
     private LocalValidatorFactoryBean validator;
 
     @Bean
-    public Jackson2JsonMessageConverter jsonMessageConverter(ObjectMapper objectMapper) {
-
-        return new Jackson2JsonMessageConverter(objectMapper);
+    public MessageConverter jsonMessageConverter(JsonMapper jsonMapper) {
+        return new JacksonJsonMessageConverter(jsonMapper);
     }
 
     @Bean
@@ -60,9 +55,9 @@ public class RabbitMqConsumerConfig implements RabbitListenerConfigurer {
     @Bean(name = "rabbitListenerContainerFactory")
     public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(SimpleRabbitListenerContainerFactoryConfigurer configurer,
                                                                                      ConnectionFactory connectionFactory,
-                                                                                     ObjectMapper objectMapper){
+                                                                                     JsonMapper jsonMapper){
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setMessageConverter(jsonMessageConverter(objectMapper));
+        factory.setMessageConverter(jsonMessageConverter(jsonMapper));
         factory.setConsumerTagStrategy(q -> applicationName+"."+q);
 
         //factory.setAfterReceivePostProcessors();

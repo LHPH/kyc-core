@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.batch.item.file.FlatFileParseException;
-import org.springframework.batch.repeat.context.RepeatContextSupport;
+import org.springframework.batch.infrastructure.item.file.FlatFileParseException;
+import org.springframework.batch.infrastructure.repeat.context.RepeatContextSupport;
 
 @ExtendWith(MockitoExtension.class)
 public class KycBatchExceptionHandlerTest {

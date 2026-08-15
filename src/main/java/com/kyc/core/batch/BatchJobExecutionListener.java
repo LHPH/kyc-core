@@ -6,8 +6,8 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.BatchStatus;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.JobExecutionListener;
+import org.springframework.batch.core.job.JobExecution;
+import org.springframework.batch.core.listener.JobExecutionListener;
 
 import java.time.LocalDateTime;
 
@@ -22,7 +22,7 @@ public class BatchJobExecutionListener implements JobExecutionListener {
     @Override
     public void afterJob(JobExecution jobExecution) {
 
-        jobName = ObjectUtils.defaultIfNull(jobName,jobExecution.getJobInstance().getJobName());
+        jobName = ObjectUtils.getIfNull(jobName,jobExecution.getJobInstance().getJobName());
         BatchStatus batchStatus = jobExecution.getStatus();
         LocalDateTime startDate = jobExecution.getCreateTime();
         LocalDateTime finishDate = jobExecution.getEndTime();
@@ -33,8 +33,8 @@ public class BatchJobExecutionListener implements JobExecutionListener {
     @Override
     public void beforeJob(JobExecution jobExecution) {
 
-        jobName = ObjectUtils.defaultIfNull(jobName,jobExecution.getJobInstance().getJobName());
-        LOGGER.info("[{}] Starting Job with id {}",jobName,jobExecution.getJobId());
+        jobName = ObjectUtils.getIfNull(jobName,jobExecution.getJobInstance().getJobName());
+        LOGGER.info("[{}] Starting Job with id {}",jobName,jobExecution.getJobInstanceId());
 
     }
 }

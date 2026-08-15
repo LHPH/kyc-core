@@ -1,6 +1,5 @@
 package com.kyc.core.security.jwt;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kyc.core.exception.KycRestException;
 import com.kyc.core.model.MessageData;
 import com.kyc.core.model.web.ResponseData;
@@ -16,6 +15,7 @@ import org.springframework.security.oauth2.jwt.BadJwtException;
 import org.springframework.security.oauth2.server.resource.InvalidBearerTokenException;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import tools.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -25,18 +25,18 @@ public class BearerTokenAuthenticationEntryPointDelegate implements Authenticati
     private static final Logger LOGGER = LoggerFactory.getLogger(BearerTokenAuthenticationEntryPointDelegate.class);
 
     private final AuthenticationEntryPoint entryPoint;
-    private final ObjectMapper objectMapper;
+    private final JsonMapper objectMapper;
     private final MessageData messageData;
 
     public BearerTokenAuthenticationEntryPointDelegate(MessageData messageData){
-        this(messageData,new ObjectMapper());
+        this(messageData,new JsonMapper());
     }
 
-    public BearerTokenAuthenticationEntryPointDelegate(MessageData messageData, ObjectMapper objectMapper){
+    public BearerTokenAuthenticationEntryPointDelegate(MessageData messageData, JsonMapper objectMapper){
         this(messageData,objectMapper,new BearerTokenAuthenticationEntryPoint());
     }
 
-    public BearerTokenAuthenticationEntryPointDelegate(MessageData messageData, ObjectMapper objectMapper, AuthenticationEntryPoint authenticationEntryPoint){
+    public BearerTokenAuthenticationEntryPointDelegate(MessageData messageData, JsonMapper objectMapper, AuthenticationEntryPoint authenticationEntryPoint){
         this.objectMapper = objectMapper;
         this.entryPoint = authenticationEntryPoint;
         this.messageData = messageData;

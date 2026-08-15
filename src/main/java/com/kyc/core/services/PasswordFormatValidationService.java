@@ -1,13 +1,14 @@
 package com.kyc.core.services;
 
-import org.passay.CharacterCharacteristicsRule;
-import org.passay.CharacterRule;
-import org.passay.EnglishCharacterData;
-import org.passay.LengthRule;
+import org.passay.DefaultPasswordValidator;
 import org.passay.PasswordData;
 import org.passay.PasswordValidator;
-import org.passay.RuleResult;
-import org.passay.UsernameRule;
+import org.passay.ValidationResult;
+import org.passay.data.EnglishCharacterData;
+import org.passay.rule.CharacterCharacteristicsRule;
+import org.passay.rule.CharacterRule;
+import org.passay.rule.LengthRule;
+import org.passay.rule.UsernameRule;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,14 +29,14 @@ public class PasswordFormatValidationService {
 
         LengthRule lengthRule = new LengthRule(8,15);
 
-        validator = new PasswordValidator(characterRule,usernameRule,lengthRule);
+        validator = new DefaultPasswordValidator(characterRule,usernameRule,lengthRule);
     }
 
     public PasswordFormatValidationService(PasswordValidator passwordValidator){
         this.validator = passwordValidator;
     }
 
-    public RuleResult validatePassword(PasswordData passwordData){
+    public ValidationResult validatePassword(PasswordData passwordData){
 
         return validator.validate(passwordData);
     }

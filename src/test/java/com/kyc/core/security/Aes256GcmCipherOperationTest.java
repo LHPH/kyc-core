@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
 
 @ExtendWith(MockitoExtension.class)
 public class Aes256GcmCipherOperationTest {

@@ -2,7 +2,6 @@ package com.kyc.core.util;
 
 import com.kyc.core.model.MockObject;
 import com.kyc.core.model.MockObject2;
-import org.apache.commons.lang3.ObjectUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;

@@ -10,7 +10,6 @@ import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -20,7 +19,7 @@ import java.security.SecureRandom;
 import java.text.ParseException;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
@@ -72,7 +71,9 @@ public final class TokenUtil {
        JWSSigner signer = new MACSigner(sharedSecret);
 
         JWTClaimsSet.Builder builder = new JWTClaimsSet.Builder();
-        for(Map.Entry<String,Object> entry : data.getAdditions().entrySet()){
+        Map<String,Object> additions = ObjectUtils.getIfNull(data.getAdditions(),HashMap::new);
+
+        for(Map.Entry<String,Object> entry : additions.entrySet()){
 
             builder = builder.claim(entry.getKey(),entry.getValue());
         }
@@ -82,7 +83,7 @@ public final class TokenUtil {
                 .claim(JWT_CLAIM_USER,data.getUser())
                 .claim(JWT_CLAIM_CHANNEL,data.getChannel())
                 .claim(JWT_CLAIM_ROLE,data.getRole())
-                .claim(JWT_CLAIM_SCOPE,ObjectUtils.defaultIfNull(data.getScope(),data.getRole()))
+                .claim(JWT_CLAIM_SCOPE,ObjectUtils.getIfNull(data.getScope(),data.getRole()))
                 .subject(data.getSub())
                 .issuer(data.getIss())
                 .audience(data.getAud())
@@ -93,7 +94,7 @@ public final class TokenUtil {
 
         Map<String,Object> headers = new HashMap<>();
         headers.put("alg",algorithm.getName());
-        headers.putAll(ObjectUtils.defaultIfNull(data.getHeaders(),new HashMap<>()));
+        headers.putAll(ObjectUtils.getIfNull(data.getHeaders(),new HashMap<>()));
 
         JWSHeader jwsHeader = JWSHeader.parse(headers);
 
@@ -123,7 +124,7 @@ public final class TokenUtil {
                     .user(convertOrNull(claimsSet.getClaim(JWT_CLAIM_USER),Long.class))
                     .channel(Objects.toString(claimsSet.getClaim(JWT_CLAIM_CHANNEL),null))
                     .role(Objects.toString(claimsSet.getClaim(JWT_CLAIM_ROLE),null))
-                    .scope(Objects.toString(ObjectUtils.defaultIfNull(claimsSet.getClaim(JWT_CLAIM_SCOPE)
+                    .scope(Objects.toString(ObjectUtils.getIfNull(claimsSet.getClaim(JWT_CLAIM_SCOPE)
                             ,claimsSet.getClaim(JWT_CLAIM_ROLE)),null))
                     .sub(claimsSet.getSubject())
                     .aud(claimsSet.getAudience())
@@ -151,7 +152,7 @@ public final class TokenUtil {
                     c.put(JWT_CLAIM_USER,jwtData.getUser());
                     c.put(JWT_CLAIM_CHANNEL,jwtData.getChannel());
                     c.put(JWT_CLAIM_ROLE,jwtData.getRole());
-                    c.put(JWT_CLAIM_SCOPE,ObjectUtils.defaultIfNull(jwtData.getScope(),jwtData.getRole()));
+                    c.put(JWT_CLAIM_SCOPE,ObjectUtils.getIfNull(jwtData.getScope(),jwtData.getRole()));
                     c.putAll(jwtData.getAdditions());
                 })
                 .headers(h -> h.putAll(jwtData.getHeaders()))
@@ -171,7 +172,7 @@ public final class TokenUtil {
                 .user(jwt.getClaim(JWT_CLAIM_USER))
                 .channel(jwt.getClaim(JWT_CLAIM_CHANNEL))
                 .role(jwt.getClaim(JWT_CLAIM_ROLE))
-                .scope(ObjectUtils.defaultIfNull(jwt.getClaim(JWT_CLAIM_SCOPE),jwt.getClaim(JWT_CLAIM_ROLE)))
+                .scope(ObjectUtils.getIfNull(jwt.getClaim(JWT_CLAIM_SCOPE),()->jwt.getClaim(JWT_CLAIM_ROLE)))
                 .sub(jwt.getSubject())
                 .aud(jwt.getAudience())
                 .iss(jwt.getIssuer().toString())

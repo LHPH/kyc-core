@@ -1,5 +1,6 @@
 package com.kyc.core.util;
 
+import jakarta.xml.bind.DatatypeConverter;
 import org.springframework.ws.FaultAwareWebServiceMessage;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.soap.SoapBody;
@@ -10,12 +11,11 @@ import org.springframework.ws.soap.SoapHeader;
 import org.springframework.ws.soap.SoapMessage;
 import org.springframework.ws.soap.client.SoapFaultClientException;
 
-import jakarta.xml.bind.DatatypeConverter;
+import javax.xml.namespace.QName;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
-import javax.xml.namespace.QName;
 
 public final class SoapUtil {
 

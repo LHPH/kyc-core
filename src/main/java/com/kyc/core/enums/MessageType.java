@@ -15,6 +15,6 @@ public enum MessageType {
                 break;
             }
         }
-        return ObjectUtils.defaultIfNull(result,defaultCase);
+        return ObjectUtils.getIfNull(result,defaultCase);
     }
 }

@@ -1,9 +1,9 @@
 package com.kyc.core.soap.adapters;
 
 import com.kyc.core.util.GeneralUtil;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import lombok.RequiredArgsConstructor;
 
-import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.Objects;
 
 @RequiredArgsConstructor

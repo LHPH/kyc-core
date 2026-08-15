@@ -1,15 +1,14 @@
 package com.kyc.core.reports.renders;
 
 import com.kyc.core.exception.KycException;
-import com.kyc.core.model.web.RequestData;
 import com.kyc.core.properties.KycMessages;
+import jakarta.annotation.PostConstruct;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.Assert;
 
-import jakarta.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 

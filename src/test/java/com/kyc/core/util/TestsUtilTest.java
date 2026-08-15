@@ -1,13 +1,11 @@
 package com.kyc.core.util;
 
 import com.kyc.core.model.web.ResponseData;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.amqp.utils.test.TestUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

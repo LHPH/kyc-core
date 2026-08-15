@@ -18,10 +18,6 @@ import org.thymeleaf.templatemode.TemplateMode;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-
 @ExtendWith(MockitoExtension.class)
 public class AbstractPdfThymeleafTemplateRenderTest {
 

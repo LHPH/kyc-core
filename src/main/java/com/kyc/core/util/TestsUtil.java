@@ -69,9 +69,9 @@ public final class TestsUtil {
                 .iat(System.currentTimeMillis())
                 .sub("SUB")
                 .iss("ISSUER")
-                .addAud("http://localhost:9000")
-                .header("alg","HMAC256")
-                .addition("claim","value")
+                .aud(List.of("http://localhost:9000"))
+                .headers(Map.of("alg","HMAC256"))
+                .additions(Map.of("claim","value"))
                 .user(1L)
                 .build();
     }

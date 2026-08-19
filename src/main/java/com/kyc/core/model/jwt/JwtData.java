@@ -25,7 +25,7 @@ public class JwtData extends BaseModel {
     private String channel;
     private String role;
     private String scope;
-
+    private String sid;
     private String sub;
     private String iss;
     @Singular("addAud")

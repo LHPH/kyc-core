@@ -1,13 +1,15 @@
 package com.kyc.core.exception.handlers;
 
 import com.kyc.core.exception.KycSoapException;
-import com.kyc.core.model.MessageData;
+import com.kyc.core.model.XmlMessageData;
+import com.kyc.core.properties.KycMessages;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.oxm.Marshaller;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.ws.soap.SoapFault;
 import org.springframework.ws.soap.SoapFaultDetail;
+import org.springframework.ws.soap.security.wss4j2.Wss4jSecurityValidationException;
 import org.springframework.ws.soap.server.endpoint.AbstractSoapFaultDefinitionExceptionResolver;
 import org.springframework.ws.soap.server.endpoint.SoapFaultDefinition;
 
@@ -18,18 +20,18 @@ public class KycGenericSoapExceptionHandler extends AbstractSoapFaultDefinitionE
 
     private static final Logger LOGGER = LogManager.getLogger(KycGenericSoapExceptionHandler.class);
 
-    private final MessageData messageData;
+    private final KycMessages kycMessages;
     private final Marshaller marshaller;
 
-    public KycGenericSoapExceptionHandler(MessageData messageData) {
+    public KycGenericSoapExceptionHandler(KycMessages kycMessages) {
 
-        this.messageData = messageData;
-        marshaller = new Jaxb2Marshaller();
-        ((Jaxb2Marshaller)marshaller).setClassesToBeBound(MessageData.class);
+        this.kycMessages = kycMessages;
+        this.marshaller = new Jaxb2Marshaller();
+        ((Jaxb2Marshaller)marshaller).setClassesToBeBound(XmlMessageData.class);
     }
 
-    public KycGenericSoapExceptionHandler(MessageData messageData, Marshaller marshaller) {
-        this.messageData = messageData;
+    public KycGenericSoapExceptionHandler(KycMessages kycMessages, Marshaller marshaller) {
+        this.kycMessages = kycMessages;
         this.marshaller = marshaller;
     }
 
@@ -38,15 +40,23 @@ public class KycGenericSoapExceptionHandler extends AbstractSoapFaultDefinitionE
 
         SoapFaultDefinition definition = new SoapFaultDefinition();
         LOGGER.error(" ",e);
-        if(e instanceof KycSoapException){
+        if(e instanceof KycSoapException kycSoapException){
 
-            KycSoapException kycSoapException = (KycSoapException)e;
             definition.setFaultCode(kycSoapException.getFaultCode());
             definition.setFaultStringOrReason(kycSoapException.getErrorData().getCode());
         }
+        else if(e instanceof Wss4jSecurityValidationException){
+
+            XmlMessageData messageData = new XmlMessageData(kycMessages.getMessageByHint("AUTH"));
+            definition.setFaultCode(SoapFaultDefinition.CLIENT);
+            definition.setFaultStringOrReason(messageData.getCode());
+
+        }
         else{
+
+            XmlMessageData messageData = new XmlMessageData(kycMessages.getMessageByHint("UNEXPECTED"));
             definition.setFaultCode(SoapFaultDefinition.SERVER);
-            definition.setFaultStringOrReason(this.messageData.getCode());
+            definition.setFaultStringOrReason(messageData.getCode());
         }
 
         return definition;
@@ -56,14 +66,18 @@ public class KycGenericSoapExceptionHandler extends AbstractSoapFaultDefinitionE
     protected void customizeFault(Object endpoint, Exception ex, SoapFault fault) {
 
         try{
-            MessageData messageData;
-            if(ex instanceof KycSoapException){
+            XmlMessageData messageData;
+            if(ex instanceof KycSoapException kycSoapException){
 
-                KycSoapException kycSoapException = (KycSoapException)ex;
-                messageData = kycSoapException.getErrorData();
+                messageData = (XmlMessageData) kycSoapException.getErrorData();
+            }
+            else if(ex instanceof Wss4jSecurityValidationException){
+
+                messageData = new XmlMessageData(kycMessages.getMessageByHint("AUTH"));
             }
             else{
-                messageData = this.messageData;
+
+                messageData = new XmlMessageData(kycMessages.getMessageByHint("UNEXPECTED"));
             }
 
             SoapFaultDetail soapFaultDetail = fault.addFaultDetail();

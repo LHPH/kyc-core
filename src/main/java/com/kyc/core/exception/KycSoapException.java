@@ -1,6 +1,7 @@
 package com.kyc.core.exception;
 
 import com.kyc.core.model.MessageData;
+import com.kyc.core.model.XmlMessageData;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -27,5 +28,10 @@ public class KycSoapException extends KycException{
         addDescription(sb, EXC_HTTP_SOAP_FAULT_CODE_LABEL,getFaultCode(),true);
 
         return sb.toString();
+    }
+
+    @Override
+    public MessageData getErrorData() {
+        return new XmlMessageData(super.getErrorData());
     }
 }

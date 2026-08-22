@@ -22,7 +22,8 @@ import java.time.Instant;
         "code",
         "message",
         "type",
-        "time"
+        "time",
+        "hint"
 })
 @NoArgsConstructor
 @AllArgsConstructor
@@ -44,6 +45,7 @@ public class XmlMessageData extends MessageData{
     @XmlSchemaType(name = "dateTime")
     private Instant time = Instant.now();
 
+    @XmlElement(name = "hint",nillable = true)
     private String hint;
 
     public XmlMessageData(String code, String message, MessageType type) {

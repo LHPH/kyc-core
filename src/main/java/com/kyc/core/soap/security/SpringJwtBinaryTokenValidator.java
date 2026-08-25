@@ -6,8 +6,10 @@ import com.kyc.core.model.jwt.JwtData;
 import com.kyc.core.security.jwt.KycUserTokenSessionService;
 import com.kyc.core.util.TokenUtil;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.wss4j.common.ext.WSSecurityException;
 import org.apache.wss4j.common.token.BinarySecurity;
+import org.apache.wss4j.common.util.XMLUtils;
 import org.apache.wss4j.dom.handler.RequestData;
 import org.apache.wss4j.dom.validate.Credential;
 import org.apache.wss4j.dom.validate.Validator;
@@ -38,7 +40,7 @@ public class SpringJwtBinaryTokenValidator implements Validator {
                 throw new WSSecurityException(WSSecurityException.ErrorCode.INVALID_SECURITY);
             }
 
-            String token = new String(binarySecurity.getToken(), StandardCharsets.UTF_8);
+            String token = ObjectUtils.getIfNull(XMLUtils.getElementText(binarySecurity.getElement()),()->"");
 
             Jwt jwt = kycUserTokenSessionService.retrieveInfoUserToken(token);
             JwtData jwtData = TokenUtil.transform(jwt);

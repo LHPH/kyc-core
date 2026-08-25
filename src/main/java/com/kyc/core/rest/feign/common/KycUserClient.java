@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@FeignClient(name = "KYC-USERS")
+@FeignClient(name = "KYC-USERS", url = "${kyc-config.services.kyc-users:http://KYC-USERS}")
 public interface KycUserClient {
 
     @GetMapping("/user/session-checking")

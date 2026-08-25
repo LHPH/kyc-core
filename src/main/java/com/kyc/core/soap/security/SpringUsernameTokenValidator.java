@@ -32,7 +32,7 @@ public class SpringUsernameTokenValidator implements Validator {
             String secret = usernameToken.getPassword();
             String pwType = usernameToken.getPasswordType();
 
-            WSPasswordCallback pwCb = new WSPasswordCallback(user, (String)null, pwType, 2);
+            WSPasswordCallback pwCb = new WSPasswordCallback(user, null, pwType, WSPasswordCallback.USERNAME_TOKEN);
             requestData.getCallbackHandler().handle(new Callback[]{pwCb});
 
             String hash = pwCb.getPassword();

@@ -16,6 +16,9 @@ import org.springframework.ws.soap.server.endpoint.SoapFaultDefinition;
 import javax.xml.transform.Result;
 import java.io.IOException;
 
+import static com.kyc.core.enums.MessageHint.AUTH;
+import static com.kyc.core.enums.MessageHint.UNEXPECTED;
+
 public class KycGenericSoapExceptionHandler extends AbstractSoapFaultDefinitionExceptionResolver {
 
     private static final Logger LOGGER = LogManager.getLogger(KycGenericSoapExceptionHandler.class);
@@ -47,14 +50,14 @@ public class KycGenericSoapExceptionHandler extends AbstractSoapFaultDefinitionE
         }
         else if(e instanceof Wss4jSecurityValidationException){
 
-            XmlMessageData messageData = new XmlMessageData(kycMessages.getMessageByHint("AUTH"));
+            XmlMessageData messageData = new XmlMessageData(kycMessages.getMessageByHint(AUTH));
             definition.setFaultCode(SoapFaultDefinition.CLIENT);
             definition.setFaultStringOrReason(messageData.getCode());
 
         }
         else{
 
-            XmlMessageData messageData = new XmlMessageData(kycMessages.getMessageByHint("UNEXPECTED"));
+            XmlMessageData messageData = new XmlMessageData(kycMessages.getMessageByHint(UNEXPECTED));
             definition.setFaultCode(SoapFaultDefinition.SERVER);
             definition.setFaultStringOrReason(messageData.getCode());
         }
@@ -73,11 +76,11 @@ public class KycGenericSoapExceptionHandler extends AbstractSoapFaultDefinitionE
             }
             else if(ex instanceof Wss4jSecurityValidationException){
 
-                messageData = new XmlMessageData(kycMessages.getMessageByHint("AUTH"));
+                messageData = new XmlMessageData(kycMessages.getMessageByHint(AUTH));
             }
             else{
 
-                messageData = new XmlMessageData(kycMessages.getMessageByHint("UNEXPECTED"));
+                messageData = new XmlMessageData(kycMessages.getMessageByHint(UNEXPECTED));
             }
 
             SoapFaultDetail soapFaultDetail = fault.addFaultDetail();

@@ -1,5 +1,6 @@
 package com.kyc.core.config;
 
+import com.kyc.core.enums.MessageHint;
 import com.kyc.core.exception.handlers.KycRestAuthValidationExceptionHandler;
 import com.kyc.core.properties.KycMessages;
 import com.kyc.core.security.jwt.BearerTokenAuthenticationEntryPointDelegate;
@@ -28,6 +29,8 @@ import tools.jackson.databind.json.JsonMapper;
 
 import java.util.Collection;
 
+import static com.kyc.core.enums.MessageHint.AUTH;
+
 @EnableWebSecurity
 @AutoConfiguration
 public class ResourceServerSecurityConfig {
@@ -40,7 +43,7 @@ public class ResourceServerSecurityConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http){
 
         http.csrf(CsrfConfigurer::disable);
         http.authorizeHttpRequests((authorize -> {
@@ -60,7 +63,7 @@ public class ResourceServerSecurityConfig {
     @Bean
     @ConditionalOnMissingBean
     public BearerTokenAuthenticationEntryPointDelegate bearerTokenAuthenticationEntryPointDelegate(){
-        return new BearerTokenAuthenticationEntryPointDelegate(kycMessages.getMessageByHint("AUTH"),jsonMapper);
+        return new BearerTokenAuthenticationEntryPointDelegate(kycMessages.getMessageByHint(AUTH),jsonMapper);
     }
 
     @Bean
@@ -101,6 +104,6 @@ public class ResourceServerSecurityConfig {
     @Bean
     @ConditionalOnMissingBean
     public KycRestAuthValidationExceptionHandler kycRestAuthValidationExceptionHandler(){
-        return new KycRestAuthValidationExceptionHandler(kycMessages.getMessageByHint("AUTH"));
+        return new KycRestAuthValidationExceptionHandler(kycMessages.getMessageByHint(AUTH));
     }
 }

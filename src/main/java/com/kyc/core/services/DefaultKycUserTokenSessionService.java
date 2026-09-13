@@ -1,5 +1,6 @@
 package com.kyc.core.services;
 
+import com.kyc.core.enums.MessageHint;
 import com.kyc.core.exception.KycRestException;
 import com.kyc.core.model.MessageData;
 import com.kyc.core.model.jwt.JwtData;
@@ -12,6 +13,8 @@ import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.jwt.Jwt;
+
+import static com.kyc.core.enums.MessageHint.AUTH;
 
 public class DefaultKycUserTokenSessionService implements KycUserTokenSessionService {
 
@@ -29,7 +32,7 @@ public class DefaultKycUserTokenSessionService implements KycUserTokenSessionSer
         }
         catch(FeignException e){
 
-            MessageData messageData = kycMessages.getMessageByHint("AUTH");
+            MessageData messageData = kycMessages.getMessageByHint(AUTH);
             throw KycRestException.builderRestException()
                     .inputData(token)
                     .status(HttpStatus.FORBIDDEN)

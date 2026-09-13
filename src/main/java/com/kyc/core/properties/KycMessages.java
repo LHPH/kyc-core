@@ -1,5 +1,6 @@
 package com.kyc.core.properties;
 
+import com.kyc.core.enums.MessageHint;
 import com.kyc.core.model.BaseModel;
 import com.kyc.core.model.MessageData;
 import com.kyc.core.model.properties.CatalogMessages;
@@ -44,5 +45,9 @@ public class KycMessages extends BaseModel {
         }
         LOGGER.warn("No messages {}",catalog);
         return new MessageData();
+    }
+
+    public MessageData getMessageByHint(MessageHint hint){
+        return getMessageByHint(hint.name());
     }
 }

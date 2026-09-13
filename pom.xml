@@ -21,6 +21,7 @@
       <spring.batch.version>6.0.4</spring.batch.version>
       <spring.ws.version>5.0.2</spring.ws.version>
       <spring-cloud.version>2025.1.2</spring-cloud.version>
+      <spring.integration.version>7.1.1</spring.integration.version>
       <openhtml.version>1.0.10</openhtml.version>
       <jedis.version>7.4.1</jedis.version>
       <commons-io.version>2.22.0</commons-io.version>
@@ -77,6 +78,14 @@
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-dependencies</artifactId>
         <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.integration</groupId>
+        <artifactId>spring-integration-bom</artifactId>
+        <version>${spring.integration.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -203,6 +212,12 @@
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.integration</groupId>
+      <artifactId>spring-integration-core</artifactId>
       <scope>provided</scope>
     </dependency>
 

@@ -3,6 +3,7 @@ package com.kyc.core.exception.handlers;
 import com.kyc.core.exception.KycException;
 import com.kyc.core.model.MessageData;
 import com.kyc.core.properties.KycMessages;
+import com.kyc.core.util.IntegrationUtil;
 import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
@@ -37,6 +38,6 @@ public class KycMessagingExceptionHandler implements GenericHandler<ErrorMessage
             messageData = kycMessages.getMessageByHint(UNEXPECTED);
         }
 
-        return String.format("%s|%s",messageData.getCode(),messageData.getMessage());
+        return IntegrationUtil.getTcpResponseFromMessage(messageData);
     }
 }
